@@ -58,9 +58,8 @@
 			<div class="sidebar-collapse">
 				<ul class="nav" id="main-menu">
 
-					
 					<li>
-						<a class="active-menu waves-effect waves-dark" href="index.html"><i class="fa fa-dashboard"></i>대회 목록<span class="fa arrow"></span></a>
+						<a class="waves-effect waves-dark" href="index.html"><i class="fa fa-dashboard"></i>대회 목록<span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li>
 								<a href="index.html">다가오는 대회</a>
@@ -74,7 +73,7 @@
 						</ul>
 					</li>
 					<li>
-						<a href="myrank.html" class="waves-effect waves-dark"><i class="fa fa-bar-chart-o"></i>개인 기록 보러가기</a>
+						<a href="myrank.html" class="active-menu waves-effect waves-dark"><i class="fa fa-bar-chart-o"></i>개인 기록 보러가기</a>
 					</li>
 					<li>
 						<a href="register.html" class="waves-effect waves-dark"><i class="fa fa-edit"></i> 대회 신청 </a>
@@ -85,87 +84,90 @@
 
 		</nav>
 		<!-- /. NAV SIDE  -->
-
 		<div id="page-wrapper">
 			<div class="header">
 				<h1 class="page-header">
-					다가오는 대회
+					개인 기록
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#">홈</a></li>
-					<li><a href="#">대회</a></li>
-					<li><a href="#">다가오는 대회</a></li>
+					<li><a href="#">개인 기록</a></li>
+					<li class="active">Mario76</li>
 				</ol>
-
+		
 			</div>
+		  
 			<div id="page-inner">
+			
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-content">
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>국가</th>
+												<th>성별</th>
+												<th>나이(만 나이)</th>
+												<th>대회</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>한국</td>
+												<td>남성</td>
+												<td>22</td>
+												<td>1</td>
+											</tr>
+										</tbody>
+									</table>
 
-				<div class="dashboard-cards">
-					<div class="row">
-						<div class="col-md-4 col-sm-4">
-							<div class="card" onclick="location.href='round.html'">
-								<div class="card-content">
-									<span class="card-title">Cubing At the museum</span>
-									<p>2023.12.03</p>
+									
+								</div>
+							</div>
+							<div class="card-action">
+								<h3>개인 기록</h3>
+							</div>
+							<div class="card-content">
+								
+								<div class="table-responsive">
+									
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>종목</th>
+												<th>단일 최고기록</th>
+												<th>단일 순위</th>
+												<th>평균 최고기록</th>
+												<th>평균 순위</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>3x3x3</td>
+												<td>10.70</td>
+												<td>12</td>
+												<td>12.13</td>
+												<td>10</td>
+											</tr>
+											<tr>
+												<td>5x5x5</td>
+												<td>1:22.69</td>
+												<td>10</td>
+												<td>1:30.95</td>
+												<td>9</td>
+											</tr>
+										</tbody>
+									</table>
+
+									
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="header">
-				<h1 class="page-header">
-					진행중인 대회
-				</h1>
-				<ol class="breadcrumb">
-					<li><a href="#">홈</a></li>
-					<li><a href="#">대회</a></li>
-					<li><a href="#">진행중인 대회</a></li>
-				</ol>
-
-			</div>
-			<div id="page-inner">
-
-				<div class="dashboard-cards">
-					<div class="row">
-						<div class="col-md-4 col-sm-4">
-							<div class="card teal" onclick="location.href='round.html'">
-								<div class="card-content white-text">
-									<span class="card-title">Cubing At the museum</span>
-									<p>2023.12.03</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="header">
-				<h1 class="page-header">
-					종료된 대회
-				</h1>
-				<ol class="breadcrumb">
-					<li><a href="#">홈</a></li>
-					<li><a href="#">대회</a></li>
-					<li><a href="#">종료된 대회</a></li>
-				</ol>
-
-			</div>
-			<div id="page-inner">
-
-				<div class="dashboard-cards">
-					<div class="row">
-						<div class="col-md-4 col-sm-4">
-							<div class="card blue-grey darken-1" onclick="location.href='round.html'">
-								<div class="card-content white-text">
-									<span class="card-title">Cubing At the museum</span>
-									<p>2023.12.03</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			</footer>
 		</div>
 		<!-- /. PAGE INNER  -->
 	</div>
