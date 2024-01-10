@@ -1,10 +1,7 @@
 package CubingClubKorea.CCK_CompRank.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,33 +16,33 @@ import java.util.Date;
 public class Round {
     @Id
     @Column(name="Idx")
-    private int Idx;
+    private int idx;
     @Column(name="CompIdx")
-    private int CompIdx;
+    private int compIdx;
 
     @Column(name="Seq")
-    private int Seq;
+    private int seq;
 
     @Column(name="EventName")
-    private String EventName;
+    private String eventName;
 
     @Column(name="Round")
-    private String Round;
+    private String round;
 
     @Column(name="EventStart")
-    private Time EventStart;
+    private Date eventStart;
 
     @Column(name="EventEnd")
-    private Time EventEnd;
+    private Date eventEnd;
 
     @Builder
     public Round(int Idx, int CompIdx, int Seq, String EventName, String Round, Time EventStart, Time EventEnd){
-        this.Idx=Idx;
-        this.CompIdx=CompIdx;
-        this.Seq=Seq;
-        this.EventName=EventName;
-        this.Round=Round;
-        this.EventStart=EventStart;
-        this.EventEnd=EventEnd;
+        this.idx=Idx;
+        this.compIdx=CompIdx;
+        this.seq=Seq;
+        this.eventName=EventName;
+        this.round=Round;
+        this.eventStart=EventStart;
+        this.eventEnd=EventEnd;
     }
 }

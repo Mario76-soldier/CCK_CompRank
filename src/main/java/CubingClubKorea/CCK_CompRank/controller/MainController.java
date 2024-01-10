@@ -2,15 +2,17 @@ package CubingClubKorea.CCK_CompRank.controller;
 
 
 import CubingClubKorea.CCK_CompRank.Service.CompListService;
+import CubingClubKorea.CCK_CompRank.Service.RoundService;
 import CubingClubKorea.CCK_CompRank.entity.CompList;
+import CubingClubKorea.CCK_CompRank.entity.Round;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,8 +20,20 @@ public class MainController {
 
     @Autowired
     private final CompListService complistService;
+    @Autowired
+    private final RoundService roundService;
 
     private Date now=new Date();
+    @GetMapping("/")
+    public String MainPage(Model model){
+        List<CompList> compListPast=complistService.getListPast(now);
+        List<CompList> compListToday=complistService.getListToday(now);
+        List<CompList> compListFuture=complistService.getListFuture(now);
+        model.addAttribute("pastList",compListPast);
+        model.addAttribute("todayList",compListToday);
+        model.addAttribute("futureList",compListFuture);
+        return "index";
+    }
 
     @GetMapping("/index")
     public String Index(Model model){
@@ -33,7 +47,16 @@ public class MainController {
     }
 
     @GetMapping("/round")
-    public String Round(Model model){
+    public String Round(@RequestParam(name="compIdx") int compIdx , Model model){
+        CompList comp=complistService.getOne(compIdx);
+        List<Round> roundPast=roundService.getRoundPast(now, compIdx);
+        List<Round> roundNow=roundService.getRoundNow(now, compIdx);
+        List<Round> roundFuture=roundService.getRoundFuture(now, compIdx);
+        model.addAttribute("comp",comp);
+        model.addAttribute("pastList",roundPast);
+        model.addAttribute("nowList",roundNow);
+        model.addAttribute("futureList",roundFuture);
+        model.addAttribute("compIdx",compIdx);
         return "round";
     }
     @GetMapping("/makecomp")

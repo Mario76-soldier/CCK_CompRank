@@ -23,16 +23,20 @@ public class CompListService {
         return complistRepository.save(compDTO.toEntity()).getIdx();
     }
 
+    public CompList getOne(int idx){
+        return complistRepository.findByIdx(idx);
+    }
+
     public List<CompList> getListToday(Date date){
         return (List<CompList>) complistRepository.findByCompDate(date);
     }
 
     public List<CompList> getListPast(Date date){
-        return (List<CompList>) complistRepository.findByCompDateAfter(date);
+        return (List<CompList>) complistRepository.findByCompDateBefore(date);
     }
 
     public List<CompList> getListFuture(Date date){
-        return (List<CompList>) complistRepository.findByCompDateBefore(date);
+        return (List<CompList>) complistRepository.findByCompDateAfter(date);
     }
 
 }

@@ -1,10 +1,12 @@
 package CubingClubKorea.CCK_CompRank.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -22,6 +24,8 @@ public class CompList {
     private String compName;
 
     @Column(name = "CompDate")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date compDate;
 
     @Builder

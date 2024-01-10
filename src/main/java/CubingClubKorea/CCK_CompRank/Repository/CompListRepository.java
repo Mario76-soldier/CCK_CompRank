@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface CompListRepository extends JpaRepository<CompList, Integer> {
+    CompList findByIdx(Integer idx);
     List<CompList> findAll();
     List<CompList> findByCompDateBefore(Date date);
     List<CompList> findByCompDate(Date date);

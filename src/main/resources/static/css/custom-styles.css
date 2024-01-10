@@ -26,7 +26,7 @@ body {
     width:100%;
     margin:10px 20px 10px 0px;
     padding: 15px 30px;
-    min-height:1200px;
+    min-height:100px;
 }
 .header .container-fluid{
 padding:0;
@@ -372,7 +372,7 @@ max-height:170px;
 max-width:170px;
 }
 .top-navbar{
-margin:0px;
+margin: 0px;
 }
 .top-navbar .navbar-brand {color: #fff;width: 260px;text-align: left;height: 60px;font-size: 24px;font-weight: 700;/* text-transform: uppercase; */line-height: 30px;background: #f44336;}
 .navbar-brand b{
@@ -546,7 +546,8 @@ ul.dropdown-menu.dropdown-messages li a div {
 	text-transform:uppercase;
 }
 .collection .collection-item{
-	padding: 16px 20px;
+	
+padding: 16px 20px;
 }
 /*----------------------------------------------
     UI ELEMENTS STYLES     
@@ -597,7 +598,7 @@ top: 59px;
  @media(max-width:480px) {
  #page-wrapper {
 position: relative;
-top: 93px;
+top: 50px;
  }
 .page-header small {
 display: block;
@@ -685,9 +686,12 @@ font-size: 19px;
 	color: #f44336;
 }
 .dropdown-content li{
-	padding: 15px;
-	color: #233342;
-	font-size: 13px;
+	
+padding: 15px;
+	
+color: #233342;
+	
+font-size: 13px;
 }
 .taskList li{padding: 20px 15px 5px;background: #fff;font-size: 12px;}
 .taskList > div{
