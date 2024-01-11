@@ -11,23 +11,23 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name="CubeEvent")
+@Table(name="Participate")
 public class Participate {
     @Id
     @Column(name="Idx")
-    private int Idx;
+    private int idx;
 
     @Column(name="UserName")
-    private String UserName;
+    private String userName;
 
     @Column(name="Email")
-    private String Email;
+    private String email;
 
     @Column(name = "EventName")
-    private String EventName;
+    private String eventName;
 
     @Column(name="Round")
-    private int Round;
+    private int round;
 
     @Column(name="m1")
     private int m1;
@@ -60,30 +60,30 @@ public class Participate {
     private float s5;
 
     @Column(name="SingleM")
-    private int SingleM;
+    private int singleM;
 
     @Column(name = "SingleS")
-    private float SingleS;
+    private float singleS;
 
     @Column(name="AvgM")
-    private int AvgM;
+    private int avgM;
 
     @Column(name = "AvgS")
-    private float AvgS;
+    private float avgS;
 
     @Column(name="Checker1")
-    private String Checker1;
+    private String checker1;
 
     @Column(name = "Checker2")
-    private String Checker2;
+    private String checker2;
 
     @Builder
     public Participate(int Idx, String UserName, String Email, String EventName, int Round){
-        this.Idx=Idx;
-        this.UserName=UserName;
-        this.Email=Email;
-        this.EventName=EventName;
-        this.Round=Round;
+        this.idx=Idx;
+        this.userName=UserName;
+        this.email=Email;
+        this.eventName=EventName;
+        this.round=Round;
     }
 
     public Participate update( int m1, float s1, int m2, float s2, int m3, float s3, int m4, float s4, int m5, float s5,int SingleM, float SingleS, int AvgM, float AvgS, String Checker1){
@@ -97,16 +97,16 @@ public class Participate {
         this.s4=s4;
         this.m5=m5;
         this.s5=s5;
-        this.SingleM=SingleM;
-        this.SingleS=SingleS;
-        this.AvgM=AvgM;
-        this.AvgS=AvgS;
-        this.Checker1=Checker1;
+        this.singleM=SingleM;
+        this.singleS=SingleS;
+        this.avgM=AvgM;
+        this.avgS=AvgS;
+        this.checker1=Checker1;
         return this;
     }
 
     public Participate update(String Checker2){
-        this.Checker2=Checker2;
+        this.checker2=Checker2;
         return this;
     }
 

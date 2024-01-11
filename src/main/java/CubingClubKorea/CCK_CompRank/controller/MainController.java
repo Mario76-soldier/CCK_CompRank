@@ -2,8 +2,10 @@ package CubingClubKorea.CCK_CompRank.controller;
 
 
 import CubingClubKorea.CCK_CompRank.Service.CompListService;
+import CubingClubKorea.CCK_CompRank.Service.ParticipateService;
 import CubingClubKorea.CCK_CompRank.Service.RoundService;
 import CubingClubKorea.CCK_CompRank.entity.CompList;
+import CubingClubKorea.CCK_CompRank.entity.Participate;
 import CubingClubKorea.CCK_CompRank.entity.Round;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class MainController {
     private final CompListService complistService;
     @Autowired
     private final RoundService roundService;
+    @Autowired
+    private final ParticipateService participateService;
 
     private Date now=new Date();
     @GetMapping("/")
@@ -68,7 +72,13 @@ public class MainController {
         return "myrank";
     }
     @GetMapping("/record")
-    public String Record(Model model){
+    public String Record(@RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx") int roundIdx, Model model){
+        CompList comp=complistService.getOne(compIdx);
+        Round round=roundService.getOne(roundIdx);
+        List<Participate> participates=participateService.getParticipate(roundIdx);
+        model.addAttribute("comp",comp);
+        model.addAttribute("round",round);
+        model.addAttribute("partList",participates);
         return "record";
     }
     @GetMapping("/recordcomp")

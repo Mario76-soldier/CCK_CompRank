@@ -27,6 +27,9 @@ public class RoundService {
     }
      **/
 
+    public Round getOne(int idx){
+        return roundRepository.findByIdx(idx);
+    }
     public List<Round> getRoundNow(Date date, int idx){
         return (List<Round>) roundRepository.findByEventStartBeforeAndEventEndAfterAndCompIdx(date,date,idx);
     }
