@@ -1,9 +1,6 @@
 package CubingClubKorea.CCK_CompRank.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Table(name="Participate")
 public class Participate {
     @Id
+    @GeneratedValue
     @Column(name="Idx")
     private int idx;
 
@@ -22,9 +20,6 @@ public class Participate {
 
     @Column(name="Email")
     private String email;
-
-    @Column(name = "EventName")
-    private String eventName;
 
     @Column(name="Round")
     private int round;
@@ -82,7 +77,6 @@ public class Participate {
         this.idx=Idx;
         this.userName=UserName;
         this.email=Email;
-        this.eventName=EventName;
         this.round=Round;
     }
 

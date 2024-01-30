@@ -15,9 +15,9 @@ import java.util.List;
 @Transactional
 public class ParticipateService {
     @Autowired
-    private final ParticipateRepository parcitipateRepository;
+    private final ParticipateRepository participateRepository;
 
     public List<Participate> getParticipate(int round){
-        return parcitipateRepository.findByRoundOrderByAvgMAscAvgSAsc(round);
+        return participateRepository.findByRoundOrderByAvgMAscAvgSAsc(round);
     }
 }

@@ -122,21 +122,39 @@
                                         <th>순위</th>
                                         <th>이름</th>
                                         <th>이메일</th>
+                                        <th>평균</th>
+                                        <th>최고기록</th>
                                         <th>1</th>
                                         <th>2</th>
                                         <th>3</th>
                                         <th>4</th>
                                         <th>5</th>
-                                        <th>평균</th>
-                                        <th>최고기록</th>
+
                                     </tr>
                                     </thead>
                                     <div th:each="part, partStat:${partList}">
                                     <tbody>
-                                    <tr class="info">
+                                    <div th:if="${partStat.count<=round.advance} ">
+                                        <tr class="success">
+                                    </div>
+                                    <div th:if="${round.advance==3} and ${partStat.count==1}">
+                                        <tr class="info">
+                                    </div>
+                                    <div th:if="${round.advance==3} and ${partStat.count==2}">
+                                        <tr class="success">
+                                    </div>
+                                    <div th:if="${round.advance==3} and ${partStat.count==3}">
+                                        <tr class="warning">
+                                    </div>
                                         <td>[[${partStat.count}]]</td>
                                         <td>[[${part.userName}]]</td>
                                         <td>[[${part.email}]]</td>
+                                        <td th:if="${part.avgM>0}">[[${part.avgM}]]:[[${part.avgS}]]</td>
+                                        <td th:if="${part.avgM==0}">[[${part.avgS}]]</td>
+                                        <td th:if="${part.avgM==0} and ${part.avgS==0}">DNF</td>
+                                        <td th:if="${part.singleM>0}">[[${part.singleM}]]:[[${part.singleS}]]</td>
+                                        <td th:if="${part.singleM==0}">[[${part.singleS}]]</td>
+                                        <td th:if="${part.singleM==0} and ${part.singleS==0}">DNF</td>
                                         <td th:if="${part.m1>0}">[[${part.m1}]]:[[${part.s1}]]</td>
                                         <td th:if="${part.m1==0}">[[${part.s1}]]</td>
                                         <td th:if="${part.m1==0} and ${part.s1==0}">DNF</td>
@@ -152,12 +170,7 @@
                                         <td th:if="${part.m5>0}">[[${part.m5}]]:[[${part.s5}]]</td>
                                         <td th:if="${part.m5==0}">[[${part.s5}]]</td>
                                         <td th:if="${part.m5==0} and ${part.s5==0}">DNF</td>
-                                        <td th:if="${part.avgM>0}">[[${part.avgM}]]:[[${part.avgS}]]</td>
-                                        <td th:if="${part.avgM==0}">[[${part.avgS}]]</td>
-                                        <td th:if="${part.avgM==0} and ${part.avgS==0}">DNF</td>
-                                        <td th:if="${part.singleM>0}">[[${part.singleM}]]:[[${part.singleS}]]</td>
-                                        <td th:if="${part.singleM==0}">[[${part.singleS}]]</td>
-                                        <td th:if="${part.singleM==0} and ${part.singleS==0}">DNF</td>
+
                                     </tr>
                                     </tbody>
                                     </div>
@@ -169,6 +182,7 @@
                     <!--End Advanced Tables -->
                 </div>
             </div>
+        </div>
             <!-- /. PAGE INNER  -->
         </div>
         <!-- JS Scripts-->
@@ -195,7 +209,7 @@
         <!-- Custom Js -->
         <script src="/js/custom-scripts.js"></script>
 
-
+</div>
 </body>
 
 </html>

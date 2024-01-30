@@ -26,6 +26,8 @@ public class RoundDTO {
 
     private Date eventEnd;
 
+    private int advance;
+
     public RoundDTO(Round entity){
         this.Idx=entity.getIdx();
         this.CompIdx=entity.getCompIdx();
@@ -34,5 +36,6 @@ public class RoundDTO {
         this.Round=entity.getRound();
         this.eventStart=entity.getEventStart();
         this.eventEnd=entity.getEventEnd();
+        this.advance=entity.getAdvance();
     }
 }

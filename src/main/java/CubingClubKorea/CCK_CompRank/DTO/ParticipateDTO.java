@@ -15,8 +15,6 @@ public class ParticipateDTO {
 
     private String Email;
 
-    private String EventName;
-
     private int Round;
 
     private int m1;
