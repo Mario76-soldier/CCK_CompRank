@@ -5,11 +5,13 @@ import CubingClubKorea.CCK_CompRank.entity.Round;
 import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 import java.sql.Time;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class RoundDTO {
     private int Idx;
@@ -20,7 +22,7 @@ public class RoundDTO {
 
     private String EventName;
 
-    private String Round;
+    private String round;
 
     private Date eventStart;
 
@@ -33,9 +35,21 @@ public class RoundDTO {
         this.CompIdx=entity.getCompIdx();
         this.Seq=entity.getSeq();
         this.EventName=entity.getEventName();
-        this.Round=entity.getRound();
+        this.round=entity.getRound();
         this.eventStart=entity.getEventStart();
         this.eventEnd=entity.getEventEnd();
         this.advance=entity.getAdvance();
+    }
+
+    public Round toEntity(){
+        return Round.builder()
+                .CompIdx(CompIdx)
+                .Seq(Seq)
+                .EventName(EventName)
+                .Round(round)
+                .EventStart(eventStart)
+                .EventEnd(eventEnd)
+                .Advance(advance)
+                .build();
     }
 }

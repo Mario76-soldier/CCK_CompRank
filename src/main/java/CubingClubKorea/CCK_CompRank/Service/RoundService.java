@@ -42,4 +42,13 @@ public class RoundService {
         return (List<Round>) roundRepository.findByEventStartBeforeAndEventEndBeforeAndCompIdx(date, date, idx);
     }
 
+    public int newRound(Round round){
+        roundRepository.save(round);
+
+        return round.getIdx();
+    }
+
+    public void deleteRound(int idx){
+        roundRepository.deleteByCompIdx(idx);
+    }
 }

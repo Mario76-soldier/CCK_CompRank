@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Ranking</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/css/materialize.min.css" media="screen,projection"/>
+    <!-- Bootstrap Styles-->
+    <link href="/css/bootstrap.css" rel="stylesheet"/>
+    <!-- FontAwesome Styles-->
+    <link href="/css/font-awesome.css" rel="stylesheet"/>
+    <!-- Morris Chart Styles-->
+    <link href="/js/morris/morris-0.4.3.min.css" rel="stylesheet"/>
+    <!-- Custom Styles-->
+    <link href="/css/custom-styles.css" rel="stylesheet"/>
+    <!-- Google Fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="/js/Lightweight-Chart/cssCharts.css">
+
+</head>
+
+<body>
+<div id="wrapper">
+    <nav class="navbar navbar-default top-navbar" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle waves-effect waves-dark" data-toggle="collapse"
+                    data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand waves-effect waves-dark" th:href="index"><i
+                    class="large material-icons"></i> <strong>Ranking</strong></a>
+
+            <div id="sideNav" href=""><i class="material-icons dp48">toc</i></div>
+        </div>
+
+        <ul class="nav navbar-top-links navbar-right">
+            <li>
+                <a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown1">
+                    <i class="fa fa-user fa-fw"></i> <b>Mario76</b>
+                    <i class="material-icons right">arrow_drop_down</i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- Dropdown Structure -->
+    <ul id="dropdown1" class="dropdown-content">
+        <li><a href="#"><i class="fa fa-user fa-fw"></i> My Profile</a>
+        </li>
+        <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+        </li>
+    </ul>
+    <!--/. NAV TOP  -->
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+
+
+                <li>
+                    <a class="active-menu waves-effect waves-dark" th:href="index"><i class="fa fa-dashboard"></i>대회
+                        목록<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a th:href="index">다가오는 대회</a>
+                        </li>
+                        <li>
+                            <a th:href="index">진행중인 대회</a>
+                        </li>
+                        <li>
+                            <a th:href="index">종료된 대회</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a th:href="myrank" class="waves-effect waves-dark"><i class="fa fa-bar-chart-o"></i>개인 기록 보러가기</a>
+                </li>
+                <li>
+                    <a th:href="register" class="waves-effect waves-dark"><i class="fa fa-edit"></i> 대회 신청 </a>
+                </li>
+            </ul>
+
+        </div>
+
+    </nav>
+    <!-- /. NAV SIDE  -->
+
+    <div id="page-wrapper">
+        <div class="header">
+            <h1 class="page-header">
+                대회 만들기
+            </h1>
+
+        </div>
+
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-action">
+                            대회 내용
+                        </div>
+                        <div class="card-content">
+                            <form class="col s12" th:action="@{/makeround}" method="post" th:object="${round}">
+
+                                <div th:each="rounds, i :${round}">
+                                    <div class="row">
+                                        <div class="input-field col s1">
+                                            <select th:field="*{rounds.getEventName()}" class="form-control input-sm">
+                                                <OPTION VALUE="3x3x3">3x3x3</OPTION>
+                                                <OPTION VALUE="4x4x4">4x4x4</OPTION>
+                                                <OPTION VALUE="5x5x5">5x5x5</OPTION>
+                                                <OPTION VALUE="6x6x6">6x6x6</OPTION>
+                                                <OPTION VALUE="7x7x7">7x7x7</OPTION>
+                                                <OPTION VALUE="3x3x3 BLD">3x3x3 BLD</OPTION>
+                                                <OPTION VALUE="3x3x3 FMC">3x3x3 FMC</OPTION>
+                                                <OPTION VALUE="3x3x3 OH">3x3x3 OH</OPTION>
+                                                <OPTION VALUE="clock">clock</OPTION>
+                                                <OPTION VALUE="megaminx">megaminx</OPTION>
+                                                <OPTION VALUE="pyraminx">pyraminx</OPTION>
+                                                <OPTION VALUE="skewb">skewb</OPTION>
+                                                <OPTION VALUE="square-1">square-1</OPTION>
+                                                <OPTION VALUE="4x4x4 BLD">4x4x4 BLD</OPTION>
+                                                <OPTION VALUE="5x5x5 BLD">5x5x5 BLD</OPTION>
+                                                <OPTION VALUE="3x3x3 MULBLD">3x3x3 MULBLD</OPTION>
+                                            </select>
+                                        </div>
+                                        <div class="input-field col s1">
+                                            <input th:field="*{rounds.Round}" type="text" class="validate">
+                                            <label>라운드 이름</label>
+                                        </div>
+                                        <div class="input-field col s1">
+                                            <input th:field="*{rounds.eventStart}" type="time" class="validate">
+                                        </div>
+                                        <div class="input-field col s1">
+                                            <input th:field="*{rounds.eventEnd}" type="time" class="validate">
+                                        </div>
+                                        <div class="input-field col s1">
+                                            <input th:field="*{rounds.advance}" type="number" class="validate">
+                                            <label>진출 인원</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="button">
+                                        <button type="submit" class="waves-effect waves-light btn">대회 만들기</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="clearBoth"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script src="/js/jquery-1.10.2.js"></script>
+
+<!-- Bootstrap Js -->
+<script src="/js/bootstrap.min.js"></script>
+
+<script src="/materialize/js/materialize.min.js"></script>
+
+<!-- Metis Menu Js -->
+<script src="/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script src="/js/morris/raphael-2.1.0.min.js"></script>
+<script src="/js/morris/morris.js"></script>
+
+
+<script src="/js/easypiechart.js"></script>
+<script src="/js/easypiechart-data.js"></script>
+
+<script src="/js/Lightweight-Chart/jquery.chart.js"></script>
+
+<!-- Custom Js -->
+<script src="/js/custom-scripts.js"></script>
+
+<script src="/js/function.js"></script>
+</body>
+
+</html>

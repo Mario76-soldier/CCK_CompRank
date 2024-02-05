@@ -15,7 +15,7 @@ import java.util.Date;
 @Table(name="Round")
 public class Round {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="Idx")
     private int idx;
 

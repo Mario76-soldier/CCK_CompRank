@@ -36,6 +36,15 @@
 
 				<div id="sideNav" href=""><i class="material-icons dp48">toc</i></div>
 			</div>
+
+			<ul class="nav navbar-top-links navbar-right">
+				<li>
+					<a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown1">
+						<i class="fa fa-user fa-fw"></i> <b>Mario76</b>
+						<i class="material-icons right">arrow_drop_down</i>
+					</a>
+				</li>
+			</ul>
 		</nav>
 		<!-- Dropdown Structure -->
 		<ul id="dropdown1" class="dropdown-content">
@@ -70,9 +79,6 @@
 					<li>
 						<a th:href="register" class="waves-effect waves-dark"><i class="fa fa-edit"></i> 대회 신청 </a>
 					</li>
-                    <li>
-						<a th:href="recordround" class="waves-effect waves-dark"><i class="fa fa-edit"></i> 대회 기록 작성 </a>
-					</li>
 				</ul>
 
 			</div>
@@ -98,7 +104,9 @@
 										<p th:text="${#dates.format(future.compDate, 'yyyy-MM-dd')}"></p>
 									</div>
 								</div>
-								<a href="#">삭제하기</a>
+								<form th:action="@{/deletecomp(idx=${future.getIdx()})}" method="post">
+									<button type="submit" class="waves-effect waves-light btn">삭제하기</button>
+								</form>
 							</div>
 						</div>
 					</div>

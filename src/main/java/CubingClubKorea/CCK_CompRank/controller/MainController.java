@@ -1,6 +1,8 @@
 package CubingClubKorea.CCK_CompRank.controller;
 
 
+import CubingClubKorea.CCK_CompRank.DTO.CompListDTO;
+import CubingClubKorea.CCK_CompRank.DTO.RoundDTO;
 import CubingClubKorea.CCK_CompRank.Service.CompListService;
 import CubingClubKorea.CCK_CompRank.Service.ParticipateService;
 import CubingClubKorea.CCK_CompRank.Service.RoundService;
@@ -11,8 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -63,9 +64,41 @@ public class MainController {
         model.addAttribute("compIdx",compIdx);
         return "round";
     }
+
     @GetMapping("/makecomp")
     public String MakeComp(Model model){
+        model.addAttribute("compList",new CompListDTO());
         return "makecomp";
+    }
+
+    @PostMapping("/makecomp")
+    public String NewComp(@ModelAttribute("compList")CompListDTO compList){
+        int index=complistService.create(compList.toEntity());
+        int countRound=complistService.getOne(index).getCountRound();
+        return "redirect:/makeround?countRound="+countRound+"&compIdx="+index;
+    }
+
+    @PostMapping("/deletecomp")
+    public String DeleteComp(@RequestParam(name="idx") int idx){
+        roundService.deleteRound(idx);
+        complistService.deleteByIdx(idx);
+        return "redirect:/";
+    }
+    @GetMapping("/makeround")
+    public String MakeRound(@RequestParam(name="countRound") int countRound, @RequestParam(name="compIdx") int compIdx, Model model){
+        model.addAttribute("countRound", countRound);
+        RoundDTO round[]=new RoundDTO[countRound];
+        for(int i=0; i<countRound; i++){
+            round[i]=new RoundDTO();
+        }
+        model.addAttribute("round", round);
+        return "makeround";
+    }
+
+    @PostMapping("/makeround")
+    public String NewRound(@ModelAttribute Round round){
+
+        return "redirect:/";
     }
     @GetMapping("/myrank")
     public String MyRank(Model model){
@@ -87,12 +120,9 @@ public class MainController {
     }
     @GetMapping("/recordlist")
     public String RecordList(Model model){
-        return "recordlist";
+        return "register";
     }
-    @GetMapping("/recordround")
-    public String RecordRound(Model model){
-        return "recordround";
-    }
+
     @GetMapping("/register")
     public String Register(Model model){
         return "register";

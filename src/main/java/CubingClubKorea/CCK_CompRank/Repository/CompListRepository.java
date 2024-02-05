@@ -13,4 +13,6 @@ public interface CompListRepository extends JpaRepository<CompList, Integer> {
     List<CompList> findByCompDateBefore(Date date);
     List<CompList> findByCompDate(Date date);
     List<CompList> findByCompDateAfter(Date date);
+
+    void deleteByIdx(int idx);
 }
