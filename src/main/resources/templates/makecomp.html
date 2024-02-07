@@ -101,7 +101,7 @@
 							대회 내용
 						</div>
 						<div class="card-content">
-							<form class="col s12" th:action="@{/makecomp}" method="post" th:object="${compList}">
+							<form class="col s12" th:action="@{/makecomp}"+ method="post" th:object="${compList}">
 								<div class="row">
 									<div class="input-field col s12">
 										<input th:field="*{compName}" type="text" class="validate">

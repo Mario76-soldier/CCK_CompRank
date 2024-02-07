@@ -104,12 +104,12 @@
                             대회 내용
                         </div>
                         <div class="card-content">
-                            <form class="col s12" th:action="@{/makeround}" method="post" th:object="${round}">
+                            <form class="col s12" th:action="@{/makeround(compIdx=${compIdx})}" method="post" th:object="${round}">
 
-                                <div th:each="rounds, i :${round}">
+                                <div  th:each="counts:${#numbers.sequence(1, countRound)}">
                                     <div class="row">
                                         <div class="input-field col s1">
-                                            <select th:field="*{rounds.getEventName()}" class="form-control input-sm">
+                                            <select th:field="*{eventName}" class="form-control input-sm">
                                                 <OPTION VALUE="3x3x3">3x3x3</OPTION>
                                                 <OPTION VALUE="4x4x4">4x4x4</OPTION>
                                                 <OPTION VALUE="5x5x5">5x5x5</OPTION>
@@ -129,17 +129,17 @@
                                             </select>
                                         </div>
                                         <div class="input-field col s1">
-                                            <input th:field="*{rounds.Round}" type="text" class="validate">
+                                            <input th:field="*{round}" type="text" class="validate">
                                             <label>라운드 이름</label>
                                         </div>
                                         <div class="input-field col s1">
-                                            <input th:field="*{rounds.eventStart}" type="time" class="validate">
+                                            <input th:field="*{eventStart}" type="datetime-local" class="validate">
                                         </div>
                                         <div class="input-field col s1">
-                                            <input th:field="*{rounds.eventEnd}" type="time" class="validate">
+                                            <input th:field="*{eventEnd}" type="datetime-local" class="validate">
                                         </div>
                                         <div class="input-field col s1">
-                                            <input th:field="*{rounds.advance}" type="number" class="validate">
+                                            <input th:field="*{advance}" type="number" class="validate">
                                             <label>진출 인원</label>
                                         </div>
                                     </div>

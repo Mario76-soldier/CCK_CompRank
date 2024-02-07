@@ -9,12 +9,16 @@ import CubingClubKorea.CCK_CompRank.Service.RoundService;
 import CubingClubKorea.CCK_CompRank.entity.CompList;
 import CubingClubKorea.CCK_CompRank.entity.Participate;
 import CubingClubKorea.CCK_CompRank.entity.Round;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import special.MultRound;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -29,6 +33,8 @@ public class MainController {
     private final ParticipateService participateService;
 
     private Date now=new Date();
+
+    SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
     @GetMapping("/")
     public String MainPage(Model model){
         List<CompList> compListPast=complistService.getListPast(now);
@@ -87,17 +93,26 @@ public class MainController {
     @GetMapping("/makeround")
     public String MakeRound(@RequestParam(name="countRound") int countRound, @RequestParam(name="compIdx") int compIdx, Model model){
         model.addAttribute("countRound", countRound);
-        RoundDTO round[]=new RoundDTO[countRound];
-        for(int i=0; i<countRound; i++){
-            round[i]=new RoundDTO();
-        }
+        MultRound round=new MultRound();
         model.addAttribute("round", round);
+        model.addAttribute("compIdx", compIdx);
         return "makeround";
     }
 
     @PostMapping("/makeround")
-    public String NewRound(@ModelAttribute Round round){
-
+    public String NewRound(@ModelAttribute MultRound round, @RequestParam(name="compIdx")int compIdx) throws ParseException {
+        System.out.println(round.getCompIdx().get(0));
+        for(int i=0; i<round.getEventStart().length; i++){
+            RoundDTO roundDTO=new RoundDTO();
+            roundDTO.setCompIdx(compIdx);
+            roundDTO.setSeq(i+1);
+            roundDTO.setRound(round.getRound().get(i));
+            roundDTO.setEventName(round.getEventName().get(i));
+            roundDTO.setEventStart(formatter.parse(round.getEventStart()[i]));
+            roundDTO.setEventEnd(formatter.parse(round.getEventEnd()[i]));
+            roundDTO.setAdvance(round.getAdvance().get(i));
+            roundService.newRound(roundDTO.toEntity());
+        }
         return "redirect:/";
     }
     @GetMapping("/myrank")
