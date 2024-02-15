@@ -30,6 +30,10 @@ public class RoundService {
     public Round getOne(int idx){
         return roundRepository.findByIdx(idx);
     }
+
+    public List<Round> getCompRound(int idx){
+        return (List<Round>) roundRepository.findByCompIdx(idx);
+    }
     public List<Round> getRoundNow(Date date, int idx){
         return (List<Round>) roundRepository.findByEventStartBeforeAndEventEndAfterAndCompIdx(date,date,idx);
     }
@@ -50,5 +54,9 @@ public class RoundService {
 
     public void deleteRound(int idx){
         roundRepository.deleteByCompIdx(idx);
+    }
+
+    public void updateAdvance(int idx, int advance){
+        roundRepository.updateAdvance(idx, advance);
     }
 }

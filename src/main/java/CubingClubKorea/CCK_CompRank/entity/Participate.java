@@ -4,19 +4,24 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@DynamicInsert
 @Table(name="Participate")
 public class Participate {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="Idx")
     private int idx;
 
     @Column(name="UserName")
     private String userName;
+
+    @Column(name="EventName")
+    private String eventName;
 
     @Column(name="Email")
     private String email;
@@ -73,9 +78,9 @@ public class Participate {
     private String checker2;
 
     @Builder
-    public Participate(int Idx, String UserName, String Email, String EventName, int Round){
-        this.idx=Idx;
+    public Participate(String UserName, String Email, String EventName, int Round){
         this.userName=UserName;
+        this.eventName=EventName;
         this.email=Email;
         this.round=Round;
     }

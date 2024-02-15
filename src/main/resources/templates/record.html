@@ -75,7 +75,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a th:href="myrank" class="waves-effect waves-dark"><i class="fa fa-bar-chart-o"></i>개인 기록 보러가기</a>
+                    <a th:href="register" class="waves-effect waves-dark"><i class="fa fa-bar-chart-o"></i>개인 기록 보러가기</a>
                 </li>
                 <li>
                     <a th:href="register" class="waves-effect waves-dark"><i class="fa fa-edit"></i> 대회 신청 </a>
@@ -95,14 +95,6 @@
             <h3 class="page-header">
                 [[${round.eventName}]] [[${round.round}]]
             </h3>
-            <ol class="breadcrumb">
-                <li><a href="#">홈</a></li>
-                <li><a href="#">대회</a></li>
-                <li><a href="#">종료된 대회</a></li>
-                <li><a href="#">[[${comp.compName}]]</a></li>
-                <li class="active">[[${round.eventName}]] [[${round.round}]]</li>
-            </ol>
-
         </div>
 
         <div id="page-inner">
@@ -118,9 +110,9 @@
                                     <tr>
                                         <th>순위</th>
                                         <th>이름</th>
-                                        <th>이메일</th>
+                                        <th>아이디</th>
                                         <th>평균</th>
-                                        <th>최고기록</th>
+                                        <th>최고</th>
                                         <th>1</th>
                                         <th>2</th>
                                         <th>3</th>
@@ -147,25 +139,25 @@
                                         <td>[[${part.userName}]]</td>
                                         <td>[[${part.email}]]</td>
                                         <td th:if="${part.avgM>0}">[[${part.avgM}]]:[[${part.avgS}]]</td>
-                                        <td th:if="${part.avgM==0}">[[${part.avgS}]]</td>
+                                        <td th:if="${part.avgM==0} and ${part.avgS!=0}">[[${part.avgS}]]</td>
                                         <td th:if="${part.avgM==0} and ${part.avgS==0}">DNF</td>
                                         <td th:if="${part.singleM>0}">[[${part.singleM}]]:[[${part.singleS}]]</td>
-                                        <td th:if="${part.singleM==0}">[[${part.singleS}]]</td>
+                                        <td th:if="${part.singleM==0} and ${part.singleS!=0}">[[${part.singleS}]]</td>
                                         <td th:if="${part.singleM==0} and ${part.singleS==0}">DNF</td>
                                         <td th:if="${part.m1>0}">[[${part.m1}]]:[[${part.s1}]]</td>
-                                        <td th:if="${part.m1==0}">[[${part.s1}]]</td>
+                                        <td th:if="${part.m1==0} and ${part.s1!=0}">[[${part.s1}]]</td>
                                         <td th:if="${part.m1==0} and ${part.s1==0}">DNF</td>
                                         <td th:if="${part.m2>0}">[[${part.m2}]]:[[${part.s2}]]</td>
-                                        <td th:if="${part.m2==0}">[[${part.s2}]]</td>
+                                        <td th:if="${part.m2==0} and ${part.s2!=0}">[[${part.s2}]]</td>
                                         <td th:if="${part.m2==0} and ${part.s2==0}">DNF</td>
                                         <td th:if="${part.m3>0}">[[${part.m3}]]:[[${part.s3}]]</td>
-                                        <td th:if="${part.m3==0}">[[${part.s3}]]</td>
+                                        <td th:if="${part.m3==0} and ${part.s3!=0}">[[${part.s3}]]</td>
                                         <td th:if="${part.m3==0} and ${part.s3==0}">DNF</td>
                                         <td th:if="${part.m4>0}">[[${part.m4}]]:[[${part.s4}]]</td>
-                                        <td th:if="${part.m4==0}">[[${part.s4}]]</td>
+                                        <td th:if="${part.m4==0} and ${part.s4!=0}">[[${part.s4}]]</td>
                                         <td th:if="${part.m4==0} and ${part.s4==0}">DNF</td>
                                         <td th:if="${part.m5>0}">[[${part.m5}]]:[[${part.s5}]]</td>
-                                        <td th:if="${part.m5==0}">[[${part.s5}]]</td>
+                                        <td th:if="${part.m5==0} and ${part.s5!=0}">[[${part.s5}]]</td>
                                         <td th:if="${part.m5==0} and ${part.s5==0}">DNF</td>
 
                                     </tr>

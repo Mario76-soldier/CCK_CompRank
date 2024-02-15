@@ -74,7 +74,7 @@
 					</ul>
 				</li>
 				<li>
-					<a th:href="myrank" class="waves-effect waves-dark"><i class="fa fa-bar-chart-o"></i>개인 기록 보러가기</a>
+					<a th:href="register" class="waves-effect waves-dark"><i class="fa fa-bar-chart-o"></i>개인 기록 보러가기</a>
 				</li>
 				<li>
 					<a th:href="register" class="waves-effect waves-dark"><i class="fa fa-edit"></i> 대회 신청 </a>
@@ -101,20 +101,20 @@
 							대회 내용
 						</div>
 						<div class="card-content">
-							<form class="col s12" th:action="@{/makecomp}"+ method="post" th:object="${compList}">
+							<form class="col s12" th:action="@{/makecomp}" method="post" th:object="${compList}">
 								<div class="row">
-									<div class="input-field col s12">
+									<div class="input-field col s6">
 										<input th:field="*{compName}" type="text" class="validate">
 										<label>대회 이름</label>
 									</div>
 								</div>
 								<div class="row">
-									<div class="input-field col s12">
+									<div class="input-field col s6">
 										<input th:field="*{compDate}" type="date" class="validate">
 									</div>
 								</div>
 								<div class="row">
-									<div class="input-field col s12">
+									<div class="input-field col s6">
 										<input th:field="*{countRound}" type="number" class="validate">
 										<label>라운드 갯수</label>
 									</div>

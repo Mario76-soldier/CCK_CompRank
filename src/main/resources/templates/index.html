@@ -74,7 +74,7 @@
 						</ul>
 					</li>
 					<li>
-						<a th:href="myrank" class="waves-effect waves-dark"><i class="fa fa-bar-chart-o"></i>개인 기록 보러가기</a>
+						<a th:href="register" class="waves-effect waves-dark"><i class="fa fa-bar-chart-o"></i>개인 기록 보러가기</a>
 					</li>
 					<li>
 						<a th:href="register" class="waves-effect waves-dark"><i class="fa fa-edit"></i> 대회 신청 </a>
@@ -132,6 +132,9 @@
 									<p th:text="${#dates.format(today.compDate, 'yyyy-MM-dd')}"></p>
 									</div>
 								</div>
+								<form th:action="@{/deletecomp(idx=${today.getIdx()})}" method="post">
+									<button type="submit" class="waves-effect waves-light btn">삭제하기</button>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -155,6 +158,9 @@
 									<p th:text="${#dates.format(past.compDate, 'yyyy-MM-dd')}"></p>
 									</div>
 								</div>
+								<form th:action="@{/deletecomp(idx=${past.getIdx()})}" method="post">
+									<button type="submit" class="waves-effect waves-light btn">삭제하기</button>
+								</form>
 							</div>
 						</div>
 					</div>

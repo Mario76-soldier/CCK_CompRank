@@ -2,6 +2,7 @@ package CubingClubKorea.CCK_CompRank.controller;
 
 
 import CubingClubKorea.CCK_CompRank.DTO.CompListDTO;
+import CubingClubKorea.CCK_CompRank.DTO.ParticipateDTO;
 import CubingClubKorea.CCK_CompRank.DTO.RoundDTO;
 import CubingClubKorea.CCK_CompRank.Service.CompListService;
 import CubingClubKorea.CCK_CompRank.Service.ParticipateService;
@@ -10,12 +11,14 @@ import CubingClubKorea.CCK_CompRank.entity.CompList;
 import CubingClubKorea.CCK_CompRank.entity.Participate;
 import CubingClubKorea.CCK_CompRank.entity.Round;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import special.MultRound;
+import special.Recorder;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -130,14 +133,81 @@ public class MainController {
         return "record";
     }
     @GetMapping("/recordcomp")
-    public String RecordComp(Model model){
+    public String RecordComp(@RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx") int roundIdx, @RequestParam(required = false, name = "search")String search, Model model){
+        CompList comp=complistService.getOne(compIdx);
+        Round round=roundService.getOne(roundIdx);
+        List<Participate> participates;
+        if(search==null) {
+            participates = participateService.getParticipate(roundIdx);
+        }
+        else{
+            participates=participateService.getSearchedParticipate(roundIdx, search);
+        }
+        model.addAttribute("compIdx",compIdx);
+        model.addAttribute("roundIdx",roundIdx);
+        model.addAttribute("comp",comp);
+        model.addAttribute("round",round);
+        model.addAttribute("partList",participates);
+        Recorder recorder=new Recorder();
+        model.addAttribute("recorder",recorder);
         return "recordcomp";
     }
-    @GetMapping("/recordlist")
-    public String RecordList(Model model){
-        return "register";
+
+    @PostMapping("/recordcomp")
+    public String UpdateRecord(@ModelAttribute Recorder recorder, @RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx") int roundIdx, @RequestParam(name="idx")int idx)throws ParseException{
+        participateService.updateRecordAo5(recorder,idx);
+        return "redirect:/recordcomp?compIdx="+compIdx+"&roundIdx="+roundIdx;
     }
 
+    @PostMapping("/updateadvance")
+    public String UpdateAdvance(@RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx")int roundIdx, Model model, HttpServletRequest request){
+        roundService.updateAdvance(roundIdx,Integer.parseInt(request.getParameter("advance")));
+        return "redirect:/recordcomp?compIdx="+compIdx+"&roundIdx="+roundIdx;
+    }
+    @PostMapping("/deleterecord")
+    public String UpdateRecord(@RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx") int roundIdx, @RequestParam(name="idx")int idx)throws ParseException{
+        participateService.deleteParticipate(idx);
+        return "redirect:/recordcomp?compIdx="+compIdx+"&roundIdx="+roundIdx;
+    }
+
+    @GetMapping("/addparticipate")
+    public String AddParticipate(@RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx") int roundIdx, Model model){
+        CompList comp=complistService.getOne(compIdx);
+        Round round=roundService.getOne(roundIdx);
+        model.addAttribute("compIdx",compIdx);
+        model.addAttribute("roundIdx",roundIdx);
+        model.addAttribute("comp",comp);
+        model.addAttribute("round",round);
+        model.addAttribute("participate",new ParticipateDTO());
+        return "addparticipate";
+    }
+
+    @PostMapping("/addparticipate")
+    public String AddingParticipate(@ModelAttribute("participate")ParticipateDTO participate, @RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx") int roundIdx){
+        participateService.addParticipate(participate.toEntity());
+        return "redirect:/recordcomp?compIdx="+compIdx+"&roundIdx="+roundIdx;
+    }
+
+    @GetMapping("/advance")
+    public String Advance(@RequestParam(name="compIdx")int compIdx, @RequestParam(name="roundIdx")int roundIdx, Model model){
+        List<Round> list=roundService.getCompRound(compIdx);
+        model.addAttribute("compIdx", compIdx);
+        model.addAttribute("roundIdx",roundIdx);
+        model.addAttribute("list",list);
+        return "advance";
+    }
+
+    @PostMapping("/advance")
+    public String sendAdvance(@RequestParam(name="compIdx")int compIdx, @RequestParam(name="pastRoundIdx")int pastRoundIdx,  @RequestParam(name="nowRoundIdx")int nowRoundIdx){
+        Round past=roundService.getOne(pastRoundIdx);
+        List<Participate> list=participateService.getParticipate(pastRoundIdx);
+        for(int i=0; i<past.getAdvance(); i++){
+            Participate p=list.get(i);
+            Participate advance=new Participate(p.getUserName(), p.getEmail(), p.getEventName(), nowRoundIdx);
+            participateService.addParticipate(advance);
+        }
+        return "redirect:/round?compIdx="+compIdx;
+    }
     @GetMapping("/register")
     public String Register(Model model){
         return "register";
