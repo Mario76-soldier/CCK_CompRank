@@ -592,13 +592,13 @@ line-height: 1.428571429;
 } 
  #page-wrapper {
 position: relative;
-top: 59px;
+top: 93px;
  }
  }
  @media(max-width:480px) {
  #page-wrapper {
 position: relative;
-top: 50px;
+top: 93px;
  }
 .page-header small {
 display: block;
@@ -716,7 +716,7 @@ padding: 0 15px 0px 15px;
 		z-index: 2;
 		position: fixed;
 		width: 260px;
-		top: 69px;
+		top: 120px;
 		box-shadow: none;
 	}
  }
