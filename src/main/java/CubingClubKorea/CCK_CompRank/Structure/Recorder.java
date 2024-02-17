@@ -1,4 +1,4 @@
-package special;
+package CubingClubKorea.CCK_CompRank.Structure;
 
 
 import lombok.Getter;

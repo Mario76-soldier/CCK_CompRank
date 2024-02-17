@@ -1,14 +1,11 @@
 package CubingClubKorea.CCK_CompRank.DTO;
 
-import CubingClubKorea.CCK_CompRank.entity.CompList;
-import CubingClubKorea.CCK_CompRank.entity.Round;
-import jakarta.persistence.Column;
+import CubingClubKorea.CCK_CompRank.Entity.Round;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.sql.Time;
 
 @Getter
 @Setter

@@ -1,7 +1,7 @@
 package CubingClubKorea.CCK_CompRank.integrateTest;
 
 import CubingClubKorea.CCK_CompRank.Repository.RoundRepository;
-import CubingClubKorea.CCK_CompRank.entity.Round;
+import CubingClubKorea.CCK_CompRank.Entity.Round;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

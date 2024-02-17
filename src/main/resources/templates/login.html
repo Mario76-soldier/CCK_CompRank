@@ -106,101 +106,68 @@
 
     <div id="page-wrapper">
         <div class="header">
-            <h1 class="page-header">
-                대회 만들기
-            </h1>
-
-        </div>
-
-        <div class="page-inner">
+            <div class="page-inner">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-md-12">
+                    <!-- Advanced Tables -->
                     <div class="card">
-                        <div class="card-action">
-                            대회 내용
-                        </div>
+                        <form method="post" th:action="@{/login}" name="login" th:object="${login}">
+                            <input type="hidden" id="csrfToken" name="_csrf" th:value="${csrfToken}">
                         <div class="card-content">
-                            <form class="col s12" th:action="@{/makeround(compIdx=${compIdx})}" method="post" th:object="${round}">
-                                <input type="hidden" id="csrfToken" name="_csrf" th:value="${csrfToken}">
-                                <div  th:each="counts:${#numbers.sequence(1, countRound)}">
-                                    <div class="row">
-                                        <div class="input-field col s1">
-                                            <select th:field="*{eventName}" class="form-control input-sm">
-                                                <OPTION VALUE="3x3x3">3x3x3</OPTION>
-                                                <OPTION VALUE="4x4x4">4x4x4</OPTION>
-                                                <OPTION VALUE="5x5x5">5x5x5</OPTION>
-                                                <OPTION VALUE="6x6x6">6x6x6</OPTION>
-                                                <OPTION VALUE="7x7x7">7x7x7</OPTION>
-                                                <OPTION VALUE="3x3x3 BLD">3x3x3 BLD</OPTION>
-                                                <OPTION VALUE="3x3x3 FMC">3x3x3 FMC</OPTION>
-                                                <OPTION VALUE="3x3x3 OH">3x3x3 OH</OPTION>
-                                                <OPTION VALUE="clock">clock</OPTION>
-                                                <OPTION VALUE="megaminx">megaminx</OPTION>
-                                                <OPTION VALUE="pyraminx">pyraminx</OPTION>
-                                                <OPTION VALUE="skewb">skewb</OPTION>
-                                                <OPTION VALUE="square-1">square-1</OPTION>
-                                                <OPTION VALUE="4x4x4 BLD">4x4x4 BLD</OPTION>
-                                                <OPTION VALUE="5x5x5 BLD">5x5x5 BLD</OPTION>
-                                                <OPTION VALUE="3x3x3 MULBLD">3x3x3 MULBLD</OPTION>
-                                            </select>
-                                        </div>
-                                        <div class="input-field col s1">
-                                            <input th:field="*{round}" type="text" class="validate">
-                                            <label>라운드 이름</label>
-                                        </div>
-                                        <div class="input-field col s2">
-                                            <input th:field="*{eventStart}" type="datetime-local" class="validate">
-                                        </div>
-                                        <div class="input-field col s2">
-                                            <input th:field="*{eventEnd}" type="datetime-local" class="validate">
-                                        </div>
-                                        <div class="input-field col s1">
-                                            <input th:field="*{advance}" type="number" class="validate">
-                                            <label>진출 인원</label>
-                                        </div>
-                                    </div>
-                                </div>
+                            <span class="row">
+                            <h1>로그인</h1>
+                            </span>
+                            <span class="row">
+                                <span class="input-field col s3">
+                                    이메일 <input type="text" name="email" id="email" class="validate" placeholder="Email">
+                                </span>
+                            </span>
+                                <span class="row">
+                                <span class="input-field col s3">
+                                    비밀번호 <input type="password" name="password" id="password" class="validate" placeholder="Password">
+                                </span>
+                                </span>
+                            <div class="row" th:if="${hasMessage == true}" th:text="${message}">
+                            </div>
+                            <span class="row">
+                            <button type="submit" class="waves-effect waves-light btn">로그인</button>
+                            </span>
 
-                                <div class="row">
-                                    <div class="button">
-                                        <button type="submit" class="waves-effect waves-light btn">대회 만들기</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="clearBoth"></div>
                         </div>
+                        </form>
                     </div>
+                    <!--End Advanced Tables -->
                 </div>
             </div>
         </div>
+        <!-- /. PAGE INNER  -->
     </div>
-    <!-- /. PAGE INNER  -->
+    </div>
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script src="/js/jquery-1.10.2.js"></script>
+
+    <!-- Bootstrap Js -->
+    <script src="/js/bootstrap.min.js"></script>
+
+    <script src="/materialize/js/materialize.min.js"></script>
+
+    <!-- Metis Menu Js -->
+    <script src="/js/jquery.metisMenu.js"></script>
+    <!-- Morris Chart Js -->
+    <script src="/js/morris/raphael-2.1.0.min.js"></script>
+    <script src="/js/morris/morris.js"></script>
+
+
+    <script src="/js/easypiechart.js"></script>
+    <script src="/js/easypiechart-data.js"></script>
+
+    <script src="/js/Lightweight-Chart/jquery.chart.js"></script>
+
+    <!-- Custom Js -->
+    <script src="/js/custom-scripts.js"></script>
+
 </div>
-<!-- JS Scripts-->
-<!-- jQuery Js -->
-<script src="/js/jquery-1.10.2.js"></script>
-
-<!-- Bootstrap Js -->
-<script src="/js/bootstrap.min.js"></script>
-
-<script src="/materialize/js/materialize.min.js"></script>
-
-<!-- Metis Menu Js -->
-<script src="/js/jquery.metisMenu.js"></script>
-<!-- Morris Chart Js -->
-<script src="/js/morris/raphael-2.1.0.min.js"></script>
-<script src="/js/morris/morris.js"></script>
-
-
-<script src="/js/easypiechart.js"></script>
-<script src="/js/easypiechart-data.js"></script>
-
-<script src="/js/Lightweight-Chart/jquery.chart.js"></script>
-
-<!-- Custom Js -->
-<script src="/js/custom-scripts.js"></script>
-
-<script src="/js/function.js"></script>
 </body>
 
 </html>

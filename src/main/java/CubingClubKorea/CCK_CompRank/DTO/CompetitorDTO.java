@@ -1,10 +1,6 @@
 package CubingClubKorea.CCK_CompRank.DTO;
 
-import CubingClubKorea.CCK_CompRank.entity.Competitor;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.Builder;
+import CubingClubKorea.CCK_CompRank.Entity.Competitor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

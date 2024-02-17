@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 	<meta charset="utf-8"/>
@@ -18,6 +18,8 @@
 	<!-- Google Fonts-->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
 	<link rel="stylesheet" href="/js/Lightweight-Chart/cssCharts.css">
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 	<script type="text/javascript">
 		function searchRedirect(){
 			var search=document.getElementById('search').value;
@@ -59,18 +61,33 @@
 		<ul class="nav navbar-top-links navbar-right">
 			<li>
 				<a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown1">
-					<i class="fa fa-user fa-fw"></i> <b>Mario76</b>
-					<i class="material-icons right">arrow_drop_down</i>
+					<div sec:authorize="isAnonymous()">
+						<i class="fa fa-user fa-fw"></i> <b>login</b>
+						<i class="material-icons right">arrow_drop_down</i>
+					</div>
+					<div sec:authorize="isAuthenticated()">
+						<i class="fa fa-user fa-fw"></i> <b sec:authentication="name"></b>
+						<i class="material-icons right">arrow_drop_down</i>
+					</div>
 				</a>
 			</li>
 		</ul>
 	</nav>
 	<!-- Dropdown Structure -->
 	<ul id="dropdown1" class="dropdown-content">
-		<li><a href="#"><i class="fa fa-user fa-fw"></i> My Profile</a>
-		</li>
-		<li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-		</li>
+		<div sec:authorize="isAnonymous()">
+			<li><a href="/login"><i class="fa fa-user fa-fw"></i>로그인</a>
+			</li>
+		</div>
+
+		<div sec:authorize="isAuthenticated()">
+			<li><a href="/register"><i class="fa fa-user fa-fw"></i> My Profile</a>
+			</li>
+			<form id="logout" action="/logout" method="post" onclick="this.submit()">
+				<li><i class="fa fa-sign-out fa-fw"></i> Logout
+			</form>
+			</li>
+		</div>
 	</ul>
 	<!--/. NAV TOP  -->
 	<nav class="navbar-default navbar-side" role="navigation">
@@ -117,7 +134,7 @@
 
 		</div>
 
-		<div id="page-inner">
+		<div class="page-inner">
 			<div class="row">
 				<div class="input-field col s9">
 					<input id="search" name="search" type="text" class="validate" placeholder="search" onkeyup="enterSearch()">
@@ -153,6 +170,7 @@
 									</thead>
 									<div th:each="part, partStat:${partList}">
 										<form th:action="@{/recordcomp(compIdx=${compIdx}, roundIdx=${roundIdx}, idx=${part.idx})}" method="post" th:object="${recorder}">
+											<input type="hidden" id="csrfToken" name="_csrf" th:value="${csrfToken}">
 										<tbody>
 										<td>[[${partStat.count}]]</td>
 										<td>[[${part.userName}]]</td>
@@ -181,6 +199,7 @@
 										</div>
 										</form>
 											<form th:action="@{/deleterecord(compIdx=${compIdx}, roundIdx=${roundIdx}, idx=${part.idx})}" method="post">
+												<input type="hidden" id="csrfToken1" name="_csrf" th:value="${csrfToken}">
 											<div class="button">
 												<button type="submit" class="waves-effect waves-light btn">삭제</button>
 											</div>
@@ -198,6 +217,7 @@
 					<form class="col s12" th:action="@{/updateadvance(compIdx=${compIdx}, roundIdx=${roundIdx})}" method="post">
 						<div class="row">
 							<div class="input-field col s1">
+								<input type="hidden" id="csrfToken2" name="_csrf" th:value="${csrfToken}">
 								<input type="number" name="advance" id="advance" class="validate">
 								<label>진출인원 갱신</label>
 							</div>

@@ -1,7 +1,8 @@
-﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+﻿<!DOCTYPE html>>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Ranking</title>
@@ -19,7 +20,6 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 	<link rel="stylesheet" href="/js/Lightweight-Chart/cssCharts.css">
 </head>
-
 <body>
 	<div id="wrapper">
 		<nav class="navbar navbar-default top-navbar" role="navigation">
@@ -40,18 +40,33 @@
 			<ul class="nav navbar-top-links navbar-right">
 				<li>
 					<a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown1">
-						<i class="fa fa-user fa-fw"></i> <b>Mario76</b>
+						<div sec:authorize="isAnonymous()">
+							<i class="fa fa-user fa-fw"></i> <b>login</b>
+							<i class="material-icons right">arrow_drop_down</i>
+						</div>
+						<div sec:authorize="isAuthenticated()">
+						<i class="fa fa-user fa-fw"></i> <b sec:authentication="name"></b>
 						<i class="material-icons right">arrow_drop_down</i>
+						</div>
 					</a>
 				</li>
 			</ul>
 		</nav>
 		<!-- Dropdown Structure -->
 		<ul id="dropdown1" class="dropdown-content">
-			<li><a href="#"><i class="fa fa-user fa-fw"></i> My Profile</a>
+			<div sec:authorize="isAnonymous()">
+				<li><a href="/login"><i class="fa fa-user fa-fw"></i>로그인</a>
+				</li>
+			</div>
+
+			<div sec:authorize="isAuthenticated()">
+			<li><a href="/register"><i class="fa fa-user fa-fw"></i> My Profile</a>
 			</li>
-			<li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+			<form id="logout" action="/logout" method="post" onclick="this.submit()">
+				<li><i class="fa fa-sign-out fa-fw"></i> Logout
+			</form>
 			</li>
+			</div>
 		</ul>
 		<!--/. NAV TOP  -->
 		<nav class="navbar-default navbar-side" role="navigation">
@@ -90,7 +105,7 @@
 					다가오는 대회
                 </h1>
 			</div>
-			<div id="page-inner">
+			<div class="page-inner">
 
 				<div class="dashboard-cards">
 					<div class="row">
@@ -102,23 +117,27 @@
 										<p th:text="${#dates.format(future.compDate, 'yyyy-MM-dd')}"></p>
 									</div>
 								</div>
+								<div sec:authorize="hasAuthority('admin')">
 								<form th:action="@{/deletecomp(idx=${future.getIdx()})}" method="post">
 									<button type="submit" class="waves-effect waves-light btn">삭제하기</button>
 								</form>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				<div sec:authorize="hasAuthority('admin')">
                 <div class="">
                     <a class="waves-effect waves-light btn-large" th:href="makecomp">대회 만들기</a>
                 </div>
+				</div>
 			</div>
 			<div class="header">
 				<h1 class="page-header">
 					진행중인 대회
 				</h1>
 			</div>
-			<div id="page-inner">
+			<div class="page-inner">
 
 				<div class="dashboard-cards">
 					<div class="row">
@@ -130,9 +149,11 @@
 									<p th:text="${#dates.format(today.compDate, 'yyyy-MM-dd')}"></p>
 									</div>
 								</div>
+								<div sec:authorize="hasAuthority('admin')">
 								<form th:action="@{/deletecomp(idx=${today.getIdx()})}" method="post">
 									<button type="submit" class="waves-effect waves-light btn">삭제하기</button>
 								</form>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -143,7 +164,7 @@
 					종료된 대회
 				</h1>
 			</div>
-			<div id="page-inner">
+			<div class="page-inner">
 
 				<div class="dashboard-cards">
 					<div class="row">
@@ -156,9 +177,11 @@
 									<p th:text="${#dates.format(past.compDate, 'yyyy-MM-dd')}"></p>
 									</div>
 								</div>
+								<div sec:authorize="hasAuthority('admin')">
 								<form th:action="@{/deletecomp(idx=${past.getIdx()})}" method="post">
 									<button type="submit" class="waves-effect waves-light btn">삭제하기</button>
 								</form>
+								</div>
 							</div>
 						</div>
 					</div>

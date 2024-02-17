@@ -1,8 +1,11 @@
 package CubingClubKorea.CCK_CompRank.Repository;
 
-import CubingClubKorea.CCK_CompRank.entity.Account;
+import CubingClubKorea.CCK_CompRank.Entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AccountRepository extends JpaRepository<Account, Integer> {
+import java.util.Optional;
 
+public interface AccountRepository extends JpaRepository<Account, Integer> {
+    boolean existsByEmail(String email);
+    Optional<Account> findByEmail(String email);
 }

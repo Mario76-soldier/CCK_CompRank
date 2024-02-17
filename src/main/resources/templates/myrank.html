@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+﻿<!DOCTYPE html>>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 	<meta charset="utf-8" />
@@ -18,41 +18,58 @@
 	<!-- Google Fonts-->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 	<link rel="stylesheet" href="/js/Lightweight-Chart/cssCharts.css">
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 
 <body>
-	<div id="wrapper">
-		<nav class="navbar navbar-default top-navbar" role="navigation">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle waves-effect waves-dark" data-toggle="collapse"
+<div id="wrapper">
+	<nav class="navbar navbar-default top-navbar" role="navigation">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle waves-effect waves-dark" data-toggle="collapse"
 					data-target=".sidebar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand waves-effect waves-dark" th:href="index"><i
-						class="large material-icons"></i> <strong>Ranking</strong></a>
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand waves-effect waves-dark" th:href="index">
+				<i class="large material-icons"></i> <strong>Ranking</strong></a>
 
-				<div id="sideNav" href=""><i class="material-icons dp48">toc</i></div>
-			</div>
+			<div id="sideNav" href=""><i class="material-icons dp48">toc</i></div>
+		</div>
 
-			<ul class="nav navbar-top-links navbar-right">
-				<li>
-					<a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown1">
-						<i class="fa fa-user fa-fw"></i> <b>Mario76</b>
+		<ul class="nav navbar-top-links navbar-right">
+			<li>
+				<a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown1">
+					<div sec:authorize="isAnonymous()">
+						<i class="fa fa-user fa-fw"></i> <b>login</b>
 						<i class="material-icons right">arrow_drop_down</i>
-					</a>
-				</li>
-			</ul>
-		</nav>
-		<!-- Dropdown Structure -->
-		<ul id="dropdown1" class="dropdown-content">
-			<li><a href="#"><i class="fa fa-user fa-fw"></i> My Profile</a>
-			</li>
-			<li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+					</div>
+					<div sec:authorize="isAuthenticated()">
+						<i class="fa fa-user fa-fw"></i> <b sec:authentication="name"></b>
+						<i class="material-icons right">arrow_drop_down</i>
+					</div>
+				</a>
 			</li>
 		</ul>
+	</nav>
+	<!-- Dropdown Structure -->
+	<ul id="dropdown1" class="dropdown-content">
+		<div sec:authorize="isAnonymous()">
+			<li><a href="/login"><i class="fa fa-user fa-fw"></i>로그인</a>
+			</li>
+		</div>
+
+		<div sec:authorize="isAuthenticated()">
+			<li><a href="/register"><i class="fa fa-user fa-fw"></i> My Profile</a>
+			</li>
+			<form id="logout" action="/logout" method="post" onclick="this.submit()">
+				<li><i class="fa fa-sign-out fa-fw"></i> Logout
+			</form>
+			</li>
+		</div>
+	</ul>
 		<!--/. NAV TOP  -->
 		<nav class="navbar-default navbar-side" role="navigation">
 			<div class="sidebar-collapse">
@@ -93,7 +110,7 @@
 		
 			</div>
 		  
-			<div id="page-inner">
+			<div class="page-inner">
 			
 				<div class="row">
 					<div class="col-md-12">

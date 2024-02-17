@@ -1,10 +1,9 @@
 package CubingClubKorea.CCK_CompRank.DTO;
 
 
-import CubingClubKorea.CCK_CompRank.entity.CompList;
+import CubingClubKorea.CCK_CompRank.Entity.CompList;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.Column;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 

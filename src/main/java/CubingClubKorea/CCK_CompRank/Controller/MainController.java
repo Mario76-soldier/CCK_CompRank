@@ -1,4 +1,4 @@
-package CubingClubKorea.CCK_CompRank.controller;
+package CubingClubKorea.CCK_CompRank.Controller;
 
 
 import CubingClubKorea.CCK_CompRank.DTO.CompListDTO;
@@ -7,18 +7,18 @@ import CubingClubKorea.CCK_CompRank.DTO.RoundDTO;
 import CubingClubKorea.CCK_CompRank.Service.CompListService;
 import CubingClubKorea.CCK_CompRank.Service.ParticipateService;
 import CubingClubKorea.CCK_CompRank.Service.RoundService;
-import CubingClubKorea.CCK_CompRank.entity.CompList;
-import CubingClubKorea.CCK_CompRank.entity.Participate;
-import CubingClubKorea.CCK_CompRank.entity.Round;
-import jakarta.persistence.criteria.CriteriaBuilder;
+import CubingClubKorea.CCK_CompRank.Entity.CompList;
+import CubingClubKorea.CCK_CompRank.Entity.Participate;
+import CubingClubKorea.CCK_CompRank.Entity.Round;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import special.MultRound;
-import special.Recorder;
+import CubingClubKorea.CCK_CompRank.Structure.MultRound;
+import CubingClubKorea.CCK_CompRank.Structure.Recorder;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,12 +74,14 @@ public class MainController {
         return "round";
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/makecomp")
     public String MakeComp(Model model){
         model.addAttribute("compList",new CompListDTO());
         return "makecomp";
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/makecomp")
     public String NewComp(@ModelAttribute("compList")CompListDTO compList){
         int index=complistService.create(compList.toEntity());
@@ -87,12 +89,14 @@ public class MainController {
         return "redirect:/makeround?countRound="+countRound+"&compIdx="+index;
     }
 
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/deletecomp")
     public String DeleteComp(@RequestParam(name="idx") int idx){
         roundService.deleteRound(idx);
         complistService.deleteByIdx(idx);
         return "redirect:/";
     }
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/makeround")
     public String MakeRound(@RequestParam(name="countRound") int countRound, @RequestParam(name="compIdx") int compIdx, Model model){
         model.addAttribute("countRound", countRound);
@@ -101,7 +105,7 @@ public class MainController {
         model.addAttribute("compIdx", compIdx);
         return "makeround";
     }
-
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/makeround")
     public String NewRound(@ModelAttribute MultRound round, @RequestParam(name="compIdx")int compIdx) throws ParseException {
         System.out.println(round.getCompIdx().get(0));
@@ -132,6 +136,7 @@ public class MainController {
         model.addAttribute("partList",participates);
         return "record";
     }
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/recordcomp")
     public String RecordComp(@RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx") int roundIdx, @RequestParam(required = false, name = "search")String search, Model model){
         CompList comp=complistService.getOne(compIdx);
@@ -152,24 +157,25 @@ public class MainController {
         model.addAttribute("recorder",recorder);
         return "recordcomp";
     }
-
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/recordcomp")
     public String UpdateRecord(@ModelAttribute Recorder recorder, @RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx") int roundIdx, @RequestParam(name="idx")int idx)throws ParseException{
         participateService.updateRecordAo5(recorder,idx);
         return "redirect:/recordcomp?compIdx="+compIdx+"&roundIdx="+roundIdx;
     }
-
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/updateadvance")
     public String UpdateAdvance(@RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx")int roundIdx, Model model, HttpServletRequest request){
         roundService.updateAdvance(roundIdx,Integer.parseInt(request.getParameter("advance")));
         return "redirect:/recordcomp?compIdx="+compIdx+"&roundIdx="+roundIdx;
     }
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/deleterecord")
     public String UpdateRecord(@RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx") int roundIdx, @RequestParam(name="idx")int idx)throws ParseException{
         participateService.deleteParticipate(idx);
         return "redirect:/recordcomp?compIdx="+compIdx+"&roundIdx="+roundIdx;
     }
-
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/addparticipate")
     public String AddParticipate(@RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx") int roundIdx, Model model){
         CompList comp=complistService.getOne(compIdx);
@@ -181,13 +187,13 @@ public class MainController {
         model.addAttribute("participate",new ParticipateDTO());
         return "addparticipate";
     }
-
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/addparticipate")
     public String AddingParticipate(@ModelAttribute("participate")ParticipateDTO participate, @RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx") int roundIdx){
         participateService.addParticipate(participate.toEntity());
         return "redirect:/recordcomp?compIdx="+compIdx+"&roundIdx="+roundIdx;
     }
-
+    @PreAuthorize("hasAuthority('admin')")
     @GetMapping("/advance")
     public String Advance(@RequestParam(name="compIdx")int compIdx, @RequestParam(name="roundIdx")int roundIdx, Model model){
         List<Round> list=roundService.getCompRound(compIdx);
@@ -196,7 +202,7 @@ public class MainController {
         model.addAttribute("list",list);
         return "advance";
     }
-
+    @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/advance")
     public String sendAdvance(@RequestParam(name="compIdx")int compIdx, @RequestParam(name="pastRoundIdx")int pastRoundIdx,  @RequestParam(name="nowRoundIdx")int nowRoundIdx){
         Round past=roundService.getOne(pastRoundIdx);

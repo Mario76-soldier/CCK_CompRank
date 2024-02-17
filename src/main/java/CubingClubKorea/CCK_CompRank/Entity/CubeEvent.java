@@ -1,4 +1,4 @@
-package CubingClubKorea.CCK_CompRank.entity;
+package CubingClubKorea.CCK_CompRank.Entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;

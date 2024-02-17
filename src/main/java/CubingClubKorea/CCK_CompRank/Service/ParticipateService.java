@@ -2,12 +2,12 @@ package CubingClubKorea.CCK_CompRank.Service;
 
 
 import CubingClubKorea.CCK_CompRank.Repository.ParticipateRepository;
-import CubingClubKorea.CCK_CompRank.entity.Participate;
+import CubingClubKorea.CCK_CompRank.Entity.Participate;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import special.Recorder;
+import CubingClubKorea.CCK_CompRank.Structure.Recorder;
 
 import java.util.Arrays;
 import java.util.List;

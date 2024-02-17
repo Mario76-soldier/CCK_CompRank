@@ -15,6 +15,7 @@ body {
 
  #wrapper {
     width: 100%;
+     margin-top: -20px;
 }
 
 #page-wrapper {
@@ -22,7 +23,7 @@ body {
     min-height: 600px;
     background: #ececec;
 }
-#page-inner {
+.page-inner {
     width:100%;
     margin:10px 20px 10px 0px;
     padding: 15px 30px;
@@ -374,7 +375,7 @@ max-width:170px;
 .top-navbar{
 margin: 0px;
 }
-.top-navbar .navbar-brand {color: #fff;width: 260px;text-align: left;height: 60px;font-size: 24px;font-weight: 700;/* text-transform: uppercase; */line-height: 30px;background: #f44336;}
+.top-navbar .navbar-brand {color: #fff;width: 260px;text-align: left;height: 65px;font-size: 24px;font-weight: 700;/* text-transform: uppercase; */line-height: 30px;background: #f44336;}
 .navbar-brand b{
 color: #4BD28C;
 }

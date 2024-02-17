@@ -1,6 +1,6 @@
 package CubingClubKorea.CCK_CompRank.Repository;
 
-import CubingClubKorea.CCK_CompRank.entity.Round;
+import CubingClubKorea.CCK_CompRank.Entity.Round;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,7 +1,6 @@
-package CubingClubKorea.CCK_CompRank.entity;
+package CubingClubKorea.CCK_CompRank.Entity;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

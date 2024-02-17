@@ -1,4 +1,4 @@
-package CubingClubKorea.CCK_CompRank.entity;
+package CubingClubKorea.CCK_CompRank.Entity;
 
 
 import jakarta.persistence.*;
@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Time;
 import java.util.Date;
 
 @Entity

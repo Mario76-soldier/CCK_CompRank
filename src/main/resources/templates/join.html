@@ -1,0 +1,212 @@
+<!DOCTYPE html>>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ranking</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/css/materialize.min.css" media="screen,projection" />
+    <!-- Bootstrap Styles-->
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <!-- FontAwesome Styles-->
+    <link href="/css/font-awesome.css" rel="stylesheet" />
+    <!-- Morris Chart Styles-->
+    <link href="/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+    <!-- Custom Styles-->
+    <link href="/css/custom-styles.css" rel="stylesheet" />
+    <!-- Google Fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="/js/Lightweight-Chart/cssCharts.css">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<body>
+<div id="wrapper">
+    <nav class="navbar navbar-default top-navbar" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle waves-effect waves-dark" data-toggle="collapse"
+                    data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand waves-effect waves-dark" th:href="index">
+                <i class="large material-icons"></i> <strong>Ranking</strong></a>
+
+            <div id="sideNav" href=""><i class="material-icons dp48">toc</i></div>
+        </div>
+
+        <ul class="nav navbar-top-links navbar-right">
+            <li>
+                <a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown1">
+                    <div sec:authorize="isAnonymous()">
+                        <i class="fa fa-user fa-fw"></i> <b>login</b>
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <i class="fa fa-user fa-fw"></i> <b sec:authentication="name"></b>
+                        <i class="material-icons right">arrow_drop_down</i>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- Dropdown Structure -->
+    <ul id="dropdown1" class="dropdown-content">
+        <div sec:authorize="isAnonymous()">
+            <li><a href="/login"><i class="fa fa-user fa-fw"></i>로그인</a>
+            </li>
+        </div>
+
+        <div sec:authorize="isAuthenticated()">
+            <li><a href="/register"><i class="fa fa-user fa-fw"></i> My Profile</a>
+            </li>
+            <form id="logout" action="/logout" method="post" onclick="this.submit()">
+                <li><i class="fa fa-sign-out fa-fw"></i> Logout
+            </form>
+            </li>
+        </div>
+    </ul>
+    <!--/. NAV TOP  -->
+    <nav class="navbar-default navbar-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="main-menu">
+
+
+                <li>
+                    <a class="active-menu waves-effect waves-dark" th:href="index"><i class="fa fa-dashboard"></i>대회
+                        목록<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a th:href="index">다가오는 대회</a>
+                        </li>
+                        <li>
+                            <a th:href="index">진행중인 대회</a>
+                        </li>
+                        <li>
+                            <a th:href="index">종료된 대회</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="waves-effect waves-dark" th:href="register"><i class="fa fa-bar-chart-o"></i>개인 기록
+                        보러가기</a>
+                </li>
+                <li>
+                    <a class="waves-effect waves-dark" th:href="register"><i class="fa fa-edit"></i> 대회 신청 </a>
+                </li>
+            </ul>
+
+        </div>
+
+    </nav>
+    <!-- /. NAV SIDE  -->
+
+    <div id="page-wrapper">
+        <div class="header">
+            <div class="page-inner">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Advanced Tables -->
+                        <div class="card">
+                            <form th:action="@{/join}" method="post" name="join" th:object="${joinRequest}">
+                                <input type="hidden" id="csrfToken" name="_csrf" th:value="${csrfToken}">
+                                <div class="card-content">
+                                    <span class="row">
+                                        <h1>회원가입</h1>
+                                    </span>
+                                    <span class="row">
+                                        <span class="input-field col s3">
+                                            이름 <input class="validate" id="name" name="name" placeholder="Name" type="text">
+                                        </span>
+                                    </span>
+                                    <span class="row">
+                                        <span class="input-field col s3">
+                                            이메일 <input class="validate" id="email" name="email" placeholder="Email" type="text">
+                                        </span>
+                                    </span>
+                                    <span class="row">
+                                        <span class="input-field col s3">
+                                            비밀번호 <input class="validate" id="password" name="password" placeholder="Password" type="password">
+                                        </span>
+                                    </span>
+                                    <span class="row">
+                                        <span class="input-field col s3">
+                                            비밀번호 확인 <input class="validate" id="passwordCorrection" name="passwordCorrection" placeholder="PasswordCorrection" type="password">
+                                        </span>
+                                    </span>
+                                    <span class="row">
+                                        <button class="waves-effect waves-light btn" type="submit">회원가입</button>
+                                    </span>
+                                </div>
+                            </form>
+                        </div>
+                        <!--End Advanced Tables -->
+                    </div>
+                </div>
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+    </div>
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script src="/js/jquery-1.10.2.js"></script>
+
+    <!-- Bootstrap Js -->
+    <script src="/js/bootstrap.min.js"></script>
+
+    <script src="/materialize/js/materialize.min.js"></script>
+
+    <!-- Metis Menu Js -->
+    <script src="/js/jquery.metisMenu.js"></script>
+    <!-- Morris Chart Js -->
+    <script src="/js/morris/raphael-2.1.0.min.js"></script>
+    <script src="/js/morris/morris.js"></script>
+
+
+    <script src="/js/easypiechart.js"></script>
+    <script src="/js/easypiechart-data.js"></script>
+
+    <script src="/js/Lightweight-Chart/jquery.chart.js"></script>
+
+    <!-- Custom Js -->
+    <script src="/js/custom-scripts.js"></script>
+    <script type="text/javascript">
+        $('#register').on("click", function (){
+            const token = $("meta[name='_csrf']").attr("content");
+            const header = $("meta[name='_csrf_header']").attr("content");
+
+            const email = $('#email').val();
+            const password = $('#password').val();
+            const name = $('#name').val();
+            const data = {
+                "email" : email,
+                "password": password,
+                "name" : name
+            }
+            $.ajax({
+                type: "post",
+                url: "/join",
+                data: data,
+                beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (data){
+                    console.log(data);
+                    alert(data.message)
+                    location.replace("/");
+                },
+                error: function (data){
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+
+</div>
+</body>
+
+</html>

@@ -1,11 +1,8 @@
 package CubingClubKorea.CCK_CompRank.Service;
 
 
-import CubingClubKorea.CCK_CompRank.DTO.CompListDTO;
-import CubingClubKorea.CCK_CompRank.DTO.RoundDTO;
 import CubingClubKorea.CCK_CompRank.Repository.RoundRepository;
-import CubingClubKorea.CCK_CompRank.entity.CompList;
-import CubingClubKorea.CCK_CompRank.entity.Round;
+import CubingClubKorea.CCK_CompRank.Entity.Round;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
