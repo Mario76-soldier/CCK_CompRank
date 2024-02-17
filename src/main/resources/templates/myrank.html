@@ -80,13 +80,13 @@
 						<a class="active-menu waves-effect waves-dark" th:href="index"><i class="fa fa-dashboard"></i>대회 목록<span class="fa arrow"></span></a>
 						<ul class="nav nav-second-level">
 							<li>
-								<a th:href="index">다가오는 대회</a>
+								<a th:href="@{/#future}">다가오는 대회</a>
 							</li>
 							<li>
-								<a th:href="index">진행중인 대회</a>
+								<a th:href="@{/#now}">진행중인 대회</a>
 							</li>
 							<li>
-								<a th:href="index">종료된 대회</a>
+								<a th:href="@{/#past}">종료된 대회</a>
 							</li>
 						</ul>
 					</li>
