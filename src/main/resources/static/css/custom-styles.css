@@ -32,6 +32,10 @@ body {
 .header .container-fluid{
 padding:0;
 }
+.footer{
+    padding:0;
+    margin-top: 400px;
+}
 .text-center {
     text-align:center;
 }
@@ -137,6 +141,7 @@ border-color: #075CB3;
    DASHBOARD STYLES    
 ------------------------------------------------*/
 .page-header {padding-bottom: 0;margin: 0;border-bottom: 1px solid transparent;text-align: left;background-color: transparent;padding: 32px 22px 10px 28px;color: #323232;}
+.page-footer {padding-bottom: 0;margin: 0;border-bottom: 1px solid transparent;text-align: left;background-color: transparent;padding: 32px 22px 10px 28px;color: #676d77;}
 .panel-left{  
 width: 100px;
 height: 100px;background: #0866C6;/* border: 2px solid #4590DA; */
@@ -356,7 +361,14 @@ color: #8d8888;
     margin-left:20px;
 }
 footer p{
-font-size: 14px;
+    color: rgba(255,255,255,0);
+    font-size: 14px;
+
+}
+
+#footer p{
+    color: rgba(255,255,255,0);
+    font-size: 14px;
 }
 /*----------------------------------------------
     MENU STYLES    
@@ -375,7 +387,7 @@ max-width:170px;
 .top-navbar{
 margin: 0px;
 }
-.top-navbar .navbar-brand {color: #fff;width: 260px;text-align: left;height: 65px;font-size: 24px;font-weight: 700;/* text-transform: uppercase; */line-height: 30px;background: #f44336;}
+.top-navbar .navbar-brand {color: #000000;width: 260px;text-align: left;height: 70px;font-size: 24px;font-weight: 700;/* text-transform: uppercase; */line-height: 30px;background: #e4e4e4; display: flex; align-items: center;}
 .navbar-brand b{
 color: #4BD28C;
 }
@@ -476,7 +488,7 @@ ul.nav.nav-second-level.collapse.in {background: #121821;}
 	border-bottom:none;
 }
 .top-navbar .nav > li > a > i {margin-right: 0;}
-.top-navbar .navbar-brand:hover {color: #FFFFFF;background-color: #f44336;}
+.top-navbar .navbar-brand:hover {color: #FFFFFF;background-color: #ffffff;}
 .dropdown-user li {
 margin: 8px 0;
 }
@@ -484,7 +496,7 @@ margin: 8px 0;
 .navbar-header {
     background: transparent;
 }
-.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {background-color: #f44336;}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {background-color: #000000;}
 .navbar-default .navbar-toggle {border-color: #ffffff;}
 
 .navbar-default .navbar-toggle .icon-bar {background-color: #ffffff;}
@@ -595,7 +607,13 @@ line-height: 1.428571429;
 position: relative;
 top: 93px;
  }
+     .footer{
+         padding:0;
+         margin-top: 200px;
+     }
  }
+
+
  @media(max-width:480px) {
  #page-wrapper {
 position: relative;
@@ -655,6 +673,14 @@ font-size: 19px;
     font-size: 55px;
     opacity: .4;
 }
+.card.horizontal.cardIcon .card-image img {
+    margin-top: 45%;
+    width: 50px;
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    z-index:1;
+}
 .navbar-brand i.large.material-icons {
     float: left;
     font-size: 31px;
@@ -711,15 +737,24 @@ padding: 0 15px 0px 15px;
  @media(max-width:768px) {
 	  
 	 .navbar-header {
-		background: #f44336;
+		background: #e4e4e4;
 	}
 	.navbar-side {
 		z-index: 2;
 		position: fixed;
 		width: 260px;
-		top: 120px;
+		top: 130px;
 		box-shadow: none;
 	}
+    .fixedCol{
+        overflow:hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width:90px;
+    }
+    .noShowMobile{
+        display:none;
+    }
  }
   @media(max-width:520px) {
 	  ul#dropdown1 {

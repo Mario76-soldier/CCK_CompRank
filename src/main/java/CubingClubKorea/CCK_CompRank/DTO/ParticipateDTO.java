@@ -49,6 +49,8 @@ public class ParticipateDTO {
 
     private float AvgS;
 
+    private Integer Ranking;
+
     private String Checker1;
 
     private String Checker2;
@@ -74,6 +76,7 @@ public class ParticipateDTO {
         this.SingleS=entity.getSingleS();
         this.AvgM=entity.getAvgM();
         this.AvgS=entity.getAvgS();
+        this.Ranking=entity.getRanking();
         this.Checker1=entity.getChecker1();
         this.Checker2=entity.getChecker2();
     }

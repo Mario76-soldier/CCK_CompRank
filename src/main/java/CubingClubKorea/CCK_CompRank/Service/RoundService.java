@@ -53,6 +53,9 @@ public class RoundService {
         roundRepository.deleteByCompIdx(idx);
     }
 
+    public void deleteByRoundIdx(int idx){
+        roundRepository.deleteByIdx(idx);
+    }
     public void updateAdvance(int idx, int advance){
         roundRepository.updateAdvance(idx, advance);
     }

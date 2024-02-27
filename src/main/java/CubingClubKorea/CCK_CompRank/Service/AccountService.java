@@ -55,4 +55,8 @@ public class AccountService {
 
         return optionalUser.get();
     }
+
+    public String getUserName(String email){
+        return accountRepository.findByEmail(email).get().getName();
+    }
 }

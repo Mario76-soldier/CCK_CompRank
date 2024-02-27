@@ -4,6 +4,7 @@ package CubingClubKorea.CCK_CompRank.Controller;
 import CubingClubKorea.CCK_CompRank.DTO.CompListDTO;
 import CubingClubKorea.CCK_CompRank.DTO.ParticipateDTO;
 import CubingClubKorea.CCK_CompRank.DTO.RoundDTO;
+import CubingClubKorea.CCK_CompRank.Service.AccountService;
 import CubingClubKorea.CCK_CompRank.Service.CompListService;
 import CubingClubKorea.CCK_CompRank.Service.ParticipateService;
 import CubingClubKorea.CCK_CompRank.Service.RoundService;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +36,8 @@ public class MainController {
     private final RoundService roundService;
     @Autowired
     private final ParticipateService participateService;
+    @Autowired
+    private final AccountService accountService;
 
     private Date now=new Date();
 
@@ -50,7 +54,7 @@ public class MainController {
     }
 
     @GetMapping("/index")
-    public String Index(Model model){
+    public String Index(Model model) {
         List<CompList> compListPast=complistService.getListPast(now);
         List<CompList> compListToday=complistService.getListToday(now);
         List<CompList> compListFuture=complistService.getListFuture(now);
@@ -92,6 +96,10 @@ public class MainController {
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/deletecomp")
     public String DeleteComp(@RequestParam(name="idx") int idx){
+        List<Round> list=roundService.getCompRound(idx);
+        for(int i=0; i<list.size(); i++) {
+            participateService.deleteByRoundIdx(list.get(i).getIdx());
+        }
         roundService.deleteRound(idx);
         complistService.deleteByIdx(idx);
         return "redirect:/";
@@ -122,6 +130,13 @@ public class MainController {
         }
         return "redirect:/";
     }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @PostMapping("/deleteround")
+    public String DeleteRound(@RequestParam(name="compIdx")int compIdx, @RequestParam(name="roundIdx")int roundIdx) throws ParseException {
+        roundService.deleteByRoundIdx(roundIdx);
+        return "redirect:/round?compIdx="+compIdx;
+    }
     @GetMapping("/myrank")
     public String MyRank(Model model){
         return "myrank";
@@ -133,6 +148,8 @@ public class MainController {
         List<Participate> participates=participateService.getParticipate(roundIdx);
         model.addAttribute("comp",comp);
         model.addAttribute("round",round);
+        model.addAttribute("compIdx",compIdx);
+        model.addAttribute("roundIdx",roundIdx);
         model.addAttribute("partList",participates);
         return "record";
     }
@@ -159,9 +176,24 @@ public class MainController {
     }
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/recordcomp")
-    public String UpdateRecord(@ModelAttribute Recorder recorder, @RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx") int roundIdx, @RequestParam(name="idx")int idx)throws ParseException{
-        participateService.updateRecordAo5(recorder,idx);
+    public String UpdateRecord(@ModelAttribute Recorder recorder, @RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx") int roundIdx, @RequestParam(name="idx")int idx, Authentication authentication)throws ParseException{
+        String checkerName=accountService.getUserName(authentication.getName());
+        participateService.updateRecordAo5(recorder, checkerName, idx);
+        participateService.updateChecker(null, idx);
+        List<Integer> list=participateService.getRank(roundIdx);
+        for(int i=0; i<list.size(); i++) {
+            System.out.println(list.get(i));
+            participateService.updateRanking(i+1,list.get(i));
+        }
         return "redirect:/recordcomp?compIdx="+compIdx+"&roundIdx="+roundIdx;
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @PostMapping("/updatechecker")
+    public String UpdateChecker(@RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx") int roundIdx, @RequestParam(name="idx")int idx, Authentication authentication)throws ParseException{
+        String checkerName=accountService.getUserName(authentication.getName());
+        participateService.updateChecker(checkerName, idx);
+        return "redirect:/record?compIdx="+compIdx+"&roundIdx="+roundIdx;
     }
     @PreAuthorize("hasAuthority('admin')")
     @PostMapping("/updateadvance")

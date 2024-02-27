@@ -1,6 +1,5 @@
-﻿<!DOCTYPE html>>
+﻿<!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,7 +33,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand waves-effect waves-dark" th:href="index">
-                <i class="large material-icons"></i> <strong>Ranking</strong></a>
+                <strong>CompRanking</strong></a>
 
             <div id="sideNav" href=""><i class="material-icons dp48">toc</i></div>
         </div>
@@ -98,9 +97,7 @@
                     <a th:href="register" class="waves-effect waves-dark"><i class="fa fa-edit"></i> 대회 신청 </a>
                 </li>
             </ul>
-
         </div>
-
     </nav>
     <!-- /. NAV SIDE  -->
 
@@ -126,16 +123,17 @@
                                     <thead>
                                     <tr>
                                         <th>순위</th>
-                                        <th>이름</th>
-                                        <th>아이디</th>
+                                        <th class="fixedCol">이름</th>
                                         <th>평균</th>
                                         <th>최고</th>
+                                        <th>아이디</th>
                                         <th>1</th>
                                         <th>2</th>
                                         <th>3</th>
                                         <th>4</th>
                                         <th>5</th>
-
+                                        <th sec:authorize="hasAuthority('admin')">1차 확인</th>
+                                        <th sec:authorize="hasAuthority('admin')">2차 확인</th>
                                     </tr>
                                     </thead>
                                     <div th:each="part, partStat:${partList}">
@@ -152,31 +150,58 @@
                                     <div th:if="${round.advance==3} and ${partStat.count==3}">
                                         <tr class="warning">
                                     </div>
-                                        <td>[[${partStat.count}]]</td>
-                                        <td>[[${part.userName}]]</td>
-                                        <td>[[${part.email}]]</td>
+                                        <td>[[${part.ranking}]]</td>
+                                        <td class="fixedCol">[[${part.userName}]]</td>
                                         <td th:if="${part.avgM>0}">[[${part.avgM}]]:[[${part.avgS}]]</td>
-                                        <td th:if="${part.avgM==0} and ${part.avgS!=0}">[[${part.avgS}]]</td>
-                                        <td th:if="${part.avgM==0} and ${part.avgS==0}">DNF</td>
+                                        <td th:if="${part.avgS==-1}">DNF</td>
+                                        <td th:if="${part.avgS==-2}">DNS</td>
+                                        <td th:if="${part.avgM==0} and ${part.avgS==0}"></td>
+                                        <td th:if="${part.avgM==0} and ${part.avgS>0}">[[${part.avgS}]]</td>
                                         <td th:if="${part.singleM>0}">[[${part.singleM}]]:[[${part.singleS}]]</td>
-                                        <td th:if="${part.singleM==0} and ${part.singleS!=0}">[[${part.singleS}]]</td>
-                                        <td th:if="${part.singleM==0} and ${part.singleS==0}">DNF</td>
+                                        <td th:if="${part.singleS==-1}">DNF</td>
+                                        <td th:if="${part.singleS==-2}">DNS</td>
+                                        <td th:if="${part.singleM==0} and ${part.singleS==0}"></td>
+                                        <td th:if="${part.singleM==0} and ${part.singleS>0}">[[${part.singleS}]]</td>
+                                        <td>[[${part.email}]]</td>
                                         <td th:if="${part.m1>0}">[[${part.m1}]]:[[${part.s1}]]</td>
-                                        <td th:if="${part.m1==0} and ${part.s1!=0}">[[${part.s1}]]</td>
-                                        <td th:if="${part.m1==0} and ${part.s1==0}">DNF</td>
+                                        <td th:if="${part.s1==-1}">DNF</td>
+                                        <td th:if="${part.s1==-2}">DNS</td>
+                                        <td th:if="${part.m1==0} and ${part.s1==0}"></td>
+                                        <td th:if="${part.m1==0} and ${part.s1>0}">[[${part.s1}]]</td>
                                         <td th:if="${part.m2>0}">[[${part.m2}]]:[[${part.s2}]]</td>
-                                        <td th:if="${part.m2==0} and ${part.s2!=0}">[[${part.s2}]]</td>
-                                        <td th:if="${part.m2==0} and ${part.s2==0}">DNF</td>
+                                        <td th:if="${part.s2==-1}">DNF</td>
+                                        <td th:if="${part.s2==-2}">DNS</td>
+                                        <td th:if="${part.m2==0} and ${part.s2==0}"></td>
+                                        <td th:if="${part.m2==0} and ${part.s2>0}">[[${part.s2}]]</td>
                                         <td th:if="${part.m3>0}">[[${part.m3}]]:[[${part.s3}]]</td>
-                                        <td th:if="${part.m3==0} and ${part.s3!=0}">[[${part.s3}]]</td>
-                                        <td th:if="${part.m3==0} and ${part.s3==0}">DNF</td>
+                                        <td th:if="${part.s3==-1}">DNF</td>
+                                        <td th:if="${part.s3==-2}">DNS</td>
+                                        <td th:if="${part.m3==0} and ${part.s3==0}"></td>
+                                        <td th:if="${part.m3==0} and ${part.s3>0}">[[${part.s3}]]</td>
                                         <td th:if="${part.m4>0}">[[${part.m4}]]:[[${part.s4}]]</td>
-                                        <td th:if="${part.m4==0} and ${part.s4!=0}">[[${part.s4}]]</td>
-                                        <td th:if="${part.m4==0} and ${part.s4==0}">DNF</td>
+                                        <td th:if="${part.s4==-1}">DNF</td>
+                                        <td th:if="${part.s4==-2}">DNS</td>
+                                        <td th:if="${part.m4==0} and ${part.s4==0}"></td>
+                                        <td th:if="${part.m4==0} and ${part.s4>0}">[[${part.s4}]]</td>
                                         <td th:if="${part.m5>0}">[[${part.m5}]]:[[${part.s5}]]</td>
-                                        <td th:if="${part.m5==0} and ${part.s5!=0}">[[${part.s5}]]</td>
-                                        <td th:if="${part.m5==0} and ${part.s5==0}">DNF</td>
-
+                                        <td th:if="${part.s5==-1}">DNF</td>
+                                        <td th:if="${part.s5==-2}">DNS</td>
+                                        <td th:if="${part.m5==0} and ${part.s5==0}"></td>
+                                        <td th:if="${part.m5==0} and ${part.s5>0}">[[${part.s5}]]</td>
+                                        <td sec:authorize="hasAuthority('admin')">[[${part.checker1}]]</td>
+                                    <td sec:authorize="hasAuthority('admin')">
+                                        <div th:if="${not #strings.isEmpty(part.checker2)}">
+                                        [[${part.checker2}]]
+                                        </div>
+                                        <div th:unless="${not #strings.isEmpty(part.checker2)}">
+                                        <form th:action="@{/updatechecker(compIdx=${compIdx}, roundIdx=${roundIdx},idx=${part.idx})}" method="post">
+                                            <input type="hidden" id="csrfToken1" name="_csrf" th:value="${csrfToken}">
+                                            <div class="button">
+                                                <button type="submit" class="waves-effect waves-light btn">2차 확인</button>
+                                            </div>
+                                        </form>
+                                        </div>
+                                    </td>
                                     </tr>
                                     </tbody>
                                     </div>

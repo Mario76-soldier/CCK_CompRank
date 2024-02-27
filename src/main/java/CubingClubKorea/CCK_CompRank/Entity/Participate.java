@@ -71,6 +71,9 @@ public class Participate {
     @Column(name = "AvgS")
     private float avgS;
 
+    @Column(name="ranking")
+    private Integer ranking;
+
     @Column(name="Checker1")
     private String checker1;
 
@@ -85,7 +88,7 @@ public class Participate {
         this.round=Round;
     }
 
-    public Participate update( int m1, float s1, int m2, float s2, int m3, float s3, int m4, float s4, int m5, float s5,int SingleM, float SingleS, int AvgM, float AvgS, String Checker1){
+    public Participate update( int m1, float s1, int m2, float s2, int m3, float s3, int m4, float s4, int m5, float s5,int SingleM, float SingleS, int AvgM, float AvgS, Integer Ranking, String Checker1){
         this.m1=m1;
         this.s1=s1;
         this.m2=m2;
@@ -100,6 +103,7 @@ public class Participate {
         this.singleS=SingleS;
         this.avgM=AvgM;
         this.avgS=AvgS;
+        this.ranking=Ranking;
         this.checker1=Checker1;
         return this;
     }

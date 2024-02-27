@@ -5,7 +5,6 @@
 	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Ranking</title>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="/css/materialize.min.css" media="screen,projection" />
 	<!-- Bootstrap Styles-->
@@ -19,6 +18,8 @@
 	<!-- Google Fonts-->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 	<link rel="stylesheet" href="/js/Lightweight-Chart/cssCharts.css">
+	<link rel="shortcut icon" href="/img/img.png" type="image/x-icon" sizes="16x16"/>
+	<title>CCK CompRanking</title>
 </head>
 <body>
 	<div id="wrapper">
@@ -32,7 +33,7 @@
 					<span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand waves-effect waves-dark" th:href="index">
-					<i class="large material-icons"></i> <strong>Ranking</strong></a>
+					<strong>CompRanking</strong></a>
 
 				<div id="sideNav" href=""><i class="material-icons dp48">toc</i></div>
 			</div>
@@ -45,7 +46,7 @@
 							<i class="material-icons right">arrow_drop_down</i>
 						</div>
 						<div sec:authorize="isAuthenticated()">
-						<i class="fa fa-user fa-fw"></i> <b sec:authentication="name"></b>
+						<i class="fa fa-user fa-fw"></i> <b sec:authentication="principal"></b>
 						<i class="material-icons right">arrow_drop_down</i>
 						</div>
 					</a>
@@ -92,10 +93,9 @@
 					<li>
 						<a th:href="register" class="waves-effect waves-dark"><i class="fa fa-edit"></i> 대회 신청 </a>
 					</li>
+
 				</ul>
-
 			</div>
-
 		</nav>
 		<!-- /. NAV SIDE  -->
 
@@ -190,9 +190,10 @@
 					</div>
 				</div>
 			</div>
-			</footer>
+
 		</div>
 		<!-- /. PAGE INNER  -->
+
 	</div>
 	<!-- JS Scripts-->
 	<!-- jQuery Js -->

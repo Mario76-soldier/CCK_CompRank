@@ -22,5 +22,6 @@ public interface RoundRepository extends JpaRepository<Round, Integer> {
     void updateAdvance(@Param(value="idx")int idx, @Param(value = "advance")int advance);
 
     void deleteByCompIdx(int compIdx);
+    void deleteByIdx(int Idx);
 
 }

@@ -29,7 +29,7 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 @EnableMethodSecurity
 public class SecurityConfig{
     private final DetailService detailService;
-    private static final int ONE_DAY = 86400;
+    private static final int QUARTER = 900;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
@@ -55,7 +55,7 @@ public class SecurityConfig{
                 )
                 .rememberMe(customizer -> customizer
                         .rememberMeParameter("remember-me")
-                        .tokenValiditySeconds(ONE_DAY)
+                        .tokenValiditySeconds(QUARTER)
                         .userDetailsService(detailService)
                         .authenticationSuccessHandler(new LoginSuccessHandler())
                 )

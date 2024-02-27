@@ -34,7 +34,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand waves-effect waves-dark" th:href="index">
-                <i class="large material-icons"></i> <strong>Ranking</strong></a>
+                <strong>CompRanking</strong></a>
 
             <div id="sideNav" href=""><i class="material-icons dp48">toc</i></div>
         </div>
@@ -97,7 +97,7 @@
                     <a th:href="register" class="waves-effect waves-dark"><i class="fa fa-edit"></i> 대회 신청 </a>
                 </li>
             </ul>
-
+            
         </div>
 
     </nav>
@@ -118,7 +118,7 @@
                                 <input type="hidden" id="csrfToken" name="_csrf" th:value="${csrfToken}">
                             <div class="card horizontal cardIcon waves-effect waves-dark" >
                                 <div class="card-image blue"><!--완료는 파란색-->
-                                    <i class=""></i>
+                                    <img th:src="@{'/img/'+${rounds.eventName}+'.svg'}"/>
                                 </div>
                                 <div class="card-stacked blue">
                                     <div class="card-content">
