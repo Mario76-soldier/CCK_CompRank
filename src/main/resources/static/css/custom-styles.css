@@ -13,6 +13,10 @@ body {
     background: #1F2837;
 }
 
+.flexer{
+    flex:1;
+}
+
  #wrapper {
     width: 100%;
      margin-top: -20px;

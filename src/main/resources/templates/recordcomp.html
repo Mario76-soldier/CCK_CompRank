@@ -200,10 +200,10 @@
 											<button type="submit" class="waves-effect waves-light btn">입력</button>
 										</div>
 										</form>
-											<form th:action="@{/deleterecord(compIdx=${compIdx}, roundIdx=${roundIdx}, idx=${part.idx})}" method="post">
+											<form th:action="@{/deleterecord(compIdx=${compIdx}, roundIdx=${roundIdx}, idx=${part.idx})}" method="post" id="dt">
 												<input type="hidden" id="csrfToken1" name="_csrf" th:value="${csrfToken}">
 											<div class="button">
-												<button type="submit" class="waves-effect waves-light btn">삭제</button>
+												<button type="button" onclick="deleteConfirm()" class="waves-effect waves-light btn">삭제</button>
 											</div>
 											</form>
 										</td>
@@ -254,6 +254,16 @@
 
 	<!-- Custom Js -->
 	<script src="/js/custom-scripts.js"></script>
+
+	<script>function deleteConfirm(){
+		if(confirm("정말 삭제하시겠습니까?")){
+			document.getElementById("dt").submit();
+		}
+		else{
+			return false;
+		}
+	}
+	</script>
 
 </div>
 </body>

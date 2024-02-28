@@ -124,18 +124,16 @@
                                         <strong>[[${#dates.format(past.eventStart, 'HH:mm')}]] - [[${#dates.format(past.eventEnd, 'HH:mm')}]]</strong>
                                     </div>
                                 </div>
-								<div sec:authorize="hasAuthority('admin')">
-								<div class="">
-									<a class="waves-effect waves-light btn-large" th:href="@{/recordcomp(compIdx=${comp.idx}, roundIdx=${past.idx})}">기록 입력하기</a>
-									<form th:action="@{/deleteround(compIdx=${comp.idx}, roundIdx=${past.idx})}" method="post">
-										<input type="hidden" id="csrfToken1" name="_csrf" th:value="${csrfToken}">
-										<div class="button">
-											<button type="submit" class="waves-effect waves-light btn-large">삭제</button>
-										</div>
-									</form>
-								</div>
-								</div>
                             </div>
+								<div sec:authorize="hasAuthority('admin')">
+									<div>
+										<a class="waves-effect waves-light btn"  th:href="@{/recordcomp(compIdx=${comp.idx}, roundIdx=${past.idx})}">기록 입력하기</a>
+										<form th:action="@{/deleteround(compIdx=${comp.idx}, roundIdx=${past.idx})}" method="post" id="p">
+											<input type="hidden" id="csrfToken1" name="_csrf" th:value="${csrfToken}">
+											<button type="button"  onclick="deleteConfirmP()" class="waves-effect waves-light btn">삭제</button>
+										</form>
+									</div>
+								</div>
 							</div>
                         </div>
                         <div class="col-xs-12">
@@ -153,18 +151,16 @@
                                         <strong>[[${#dates.format(now.eventStart, 'HH:mm')}]] - [[${#dates.format(now.eventEnd, 'HH:mm')}]]</strong>
                                     </div>
                                 </div>
-								<div sec:authorize="hasAuthority('admin')">
-								<div class="">
-									<a class="waves-effect waves-light btn-large" th:href="@{/recordcomp(compIdx=${comp.idx}, roundIdx=${now.idx})}">기록 입력하기</a>
-									<form th:action="@{/deleteround(compIdx=${comp.idx}, roundIdx=${now.idx})}" method="post">
-										<input type="hidden" id="csrfToken2" name="_csrf" th:value="${csrfToken}">
-										<div class="button">
-											<button type="submit" class="waves-effect waves-light btn-large">삭제</button>
-										</div>
-									</form>
-								</div>
-								</div>
 							</div>
+								<div sec:authorize="hasAuthority('admin')">
+									<div>
+										<a class="waves-effect waves-light btn"  th:href="@{/recordcomp(compIdx=${comp.idx}, roundIdx=${now.idx})}">기록 입력하기</a>
+										<form th:action="@{/deleteround(compIdx=${comp.idx}, roundIdx=${now.idx})}" method="post" id="n">
+											<input type="hidden" id="csrfToken2" name="_csrf" th:value="${csrfToken}">
+											<button type="button"  onclick="deleteConfirmN()" class="waves-effect waves-light btn">삭제</button>
+										</form>
+									</div>
+								</div>
                             </div>
         
                         </div>
@@ -182,18 +178,16 @@
                                         <strong>[[${#dates.format(future.eventStart, 'HH:mm')}]] - [[${#dates.format(future.eventEnd, 'HH:mm')}]]</strong>
                                     </div>
                                 </div>
-								<div sec:authorize="hasAuthority('admin')">
-								<div class="">
-									<a class="waves-effect waves-light btn-large" th:href="@{/recordcomp(compIdx=${comp.idx}, roundIdx=${future.idx})}">기록 입력하기</a>
-									<form th:action="@{/deleteround(compIdx=${comp.idx}, roundIdx=${future.idx})}" method="post">
-										<input type="hidden" id="csrfToken3" name="_csrf" th:value="${csrfToken}">
-										<div class="button">
-											<button type="submit" class="waves-effect waves-light btn-large">삭제</button>
-										</div>
-									</form>
-								</div>
-								</div>
                             </div>
+								<div sec:authorize="hasAuthority('admin')">
+									<div>
+										<a class="waves-effect waves-light btn"  th:href="@{/recordcomp(compIdx=${comp.idx}, roundIdx=${future.idx})}">기록 입력하기</a>
+										<form th:action="@{/deleteround(compIdx=${comp.idx}, roundIdx=${future.idx})}" method="post" id="f">
+											<input type="hidden" id="csrfToken3" name="_csrf" th:value="${csrfToken}">
+											<button type="button"  onclick="deleteConfirmF()" class="waves-effect waves-light btn">삭제</button>
+										</form>
+									</div>
+								</div>
 							</div>
         
                         </div>
@@ -231,6 +225,32 @@
 
 	<!-- Custom Js -->
 	<script src="/js/custom-scripts.js"></script>
+
+	<script>function deleteConfirmP(){
+		if(confirm("정말 삭제하시겠습니까?")){
+			document.getElementById("p").submit();
+		}
+		else{
+			return false;
+		}
+	}
+	function deleteConfirmN(){
+		if(confirm("정말 삭제하시겠습니까?")){
+			document.getElementById("n").submit();
+		}
+		else{
+			return false;
+		}
+	}
+	function deleteConfirmF(){
+		if(confirm("정말 삭제하시겠습니까?")){
+			document.getElementById("f").submit();
+		}
+		else{
+			return false;
+		}
+	}
+	</script>
 
 
 </body>
