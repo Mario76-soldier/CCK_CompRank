@@ -183,7 +183,12 @@ public class ParticipateService {
             m1=0;
             s1=-1;
         }
-        else {
+        else if (recorder.getFirst()==-2) {
+            f=-2;
+            m1=0;
+            s1=-2;
+        }
+        else{
             m1 = recorder.getFirst() / 10000;
             s1 = ((double) recorder.getFirst() % 10000) / 100;
             f = m1 * 60 + s1;
@@ -192,6 +197,11 @@ public class ParticipateService {
             s=-1;
             m2=0;
             s2=-1;
+        }
+        else if (recorder.getSecond()==-2) {
+            s=-2;
+            m2=0;
+            s2=-2;
         }
         else {
             m2 = recorder.getSecond() / 10000;
@@ -202,6 +212,11 @@ public class ParticipateService {
             t=-1;
             m3=0;
             s3=-1;
+        }
+        else if (recorder.getThird()==-2) {
+            t=-2;
+            m3=0;
+            s3=-2;
         }
         else {
             m3 = recorder.getThird() / 10000;
@@ -217,7 +232,7 @@ public class ParticipateService {
         boolean canAvg=true;
 
         for(int j=0; j<3; j++){
-            if(record[j]==-0.01 || record[j]==-0.02){
+            if(record[j]==-1 || record[j]==-2){
                 dnfCounter++;
                 record[j]=36000;
                 continue;
@@ -233,10 +248,6 @@ public class ParticipateService {
             }
         }
 
-        if(single==36000){
-            single=-1;
-        }
-
         if(dnfCounter>=1) {
             avgM=0;
             avgS=-1;
@@ -250,10 +261,16 @@ public class ParticipateService {
             avgS=Math.floor((((record[0]+record[1]+record[2])/3)%60)*100)/100;
         }
 
-        singleM=(int)single/60;
-        singleS=single%60;
+        if(single==36000){
+            singleM=0;
+            singleS=-1;
+        }
+        else {
+            singleM = (int) single / 60;
+            singleS = single % 60;
+        }
 
-        if(s1>=0 && s1<60 && s2>=0 && s2<60 &&s3>=0 && s3<60) {
+        if(s1>=-2 && s1<60 && s2>=-2 && s2<60 &&s3>=-2 && s3<60) {
             participateRepository.updateRecord(m1, s1, m2, s2, m3, s3, 0, 0, 0, 0, avgM, avgS, singleM, singleS,checkerName, idx);
             return idx;
         }

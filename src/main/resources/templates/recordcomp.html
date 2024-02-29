@@ -127,7 +127,7 @@
 				[[${comp.compName}]]
 			</h1>
 			<h3 class="page-header">
-				[[${round.eventName}]] [[${round.round}]]
+				[[${round.cubeEvent.eventName}]] [[${round.round}]]
 			</h3>
 
 		</div>
@@ -140,7 +140,7 @@
 					<input type="hidden" id="roundIdx" name="roundIdx" th:value="${roundIdx}">
 				</div>
 				<a onclick="searchRedirect()" class="waves-effect waves-light btn">검색하기</a>
-			`	<a th:href="@{/addparticipate(compIdx=${compIdx}, roundIdx=${roundIdx})}" class="waves-effect waves-light btn">선수 추가</a>
+				`	<a th:href="@{/addparticipate(compIdx=${compIdx}, roundIdx=${roundIdx})}" class="waves-effect waves-light btn">선수 추가</a>
 				<a th:href="@{/advance(compIdx=${compIdx}, roundIdx=${roundIdx})}" class="waves-effect waves-light btn">기록 확정</a>
 			</div>
 
@@ -161,51 +161,57 @@
 										<th>1</th>
 										<th>2</th>
 										<th>3</th>
-										<th>4</th>
-										<th>5</th>
+										<th:block th:if="${round.cubeEvent.avgCalc=='ao5'}">
+											<th>4</th>
+											<th>5</th>
+										</th:block>
 
 									</tr>
 									</thead>
 									<div th:each="part, partStat:${partList}">
 										<form th:action="@{/recordcomp(compIdx=${compIdx}, roundIdx=${roundIdx}, idx=${part.idx})}" method="post" th:object="${recorder}">
 											<input type="hidden" id="csrfToken" name="_csrf" th:value="${csrfToken}">
-										<tbody>
-										<td>[[${part.ranking}]]</td>
-										<td>[[${part.userName}]]</td>
-										<td>[[${part.email}]]</td>
-										<td th:if="${part.avgM>0}">[[${part.avgM}]]:[[${part.avgS}]]</td>
-										<td th:if="${part.avgS==-1}">DNF</td>
-										<td th:if="${part.avgS==-2}">DNS</td>
-										<td th:if="${part.avgM==0} and ${part.avgS==0}"></td>
-										<td th:if="${part.avgM==0} and ${part.avgS>0}">[[${part.avgS}]]</td>
-										<td th:if="${part.singleM>0}">[[${part.singleM}]]:[[${part.singleS}]]</td>
-										<td th:if="${part.singleS==-1}">DNF</td>
-										<td th:if="${part.singleS==-2}">DNS</td>
-										<td th:if="${part.singleM==0} and ${part.singleS==0}"></td>
-										<td th:if="${part.singleM==0} and ${part.singleS>0}">[[${part.singleS}]]</td>
-										<td>
-											<input type="number" id="first" name="first" th:value="${part.m1}*10000+${#numbers.formatInteger(part.s1*100,1)}">
-										</td>
-										<td>
-											<input type="number" id="second" name="second" th:value="${part.m2}*10000+${#numbers.formatInteger(part.s2*100,1)}">
-										</td><td>
-											<input type="number" id="third" name="third" th:value="${part.m3}*10000+${#numbers.formatInteger(part.s3*100,1)}">
-										</td><td>
-											<input type="number" id="fourth" name="fourth" th:value="${part.m4}*10000+${#numbers.formatInteger(part.s4*100,1)}">
-										</td><td>
-											<input type="number" id="fifth" name="fifth" th:value="${part.m5}*10000+${#numbers.formatInteger(part.s5*100,1)}">
-										</td>
-										<td>
-										<div class="button">
-											<button type="submit" class="waves-effect waves-light btn">입력</button>
-										</div>
+											<tbody>
+											<td>[[${part.ranking}]]</td>
+											<td>[[${part.userName}]]</td>
+											<td>[[${part.email}]]</td>
+											<td th:if="${part.avgM>0}">[[${part.avgM}]]:[[${part.avgS}]]</td>
+											<td th:if="${part.avgS==-1}">DNF</td>
+											<td th:if="${part.avgS==-2}">DNS</td>
+											<td th:if="${part.avgM==0} and ${part.avgS==0}"></td>
+											<td th:if="${part.avgM==0} and ${part.avgS>0}">[[${part.avgS}]]</td>
+											<td th:if="${part.singleM>0}">[[${part.singleM}]]:[[${part.singleS}]]</td>
+											<td th:if="${part.singleS==-1}">DNF</td>
+											<td th:if="${part.singleS==-2}">DNS</td>
+											<td th:if="${part.singleM==0} and ${part.singleS==0}"></td>
+											<td th:if="${part.singleM==0} and ${part.singleS>0}">[[${part.singleS}]]</td>
+											<td>
+												<input type="number" id="first" name="first" th:value="${part.m1}*10000+${#numbers.formatInteger(part.s1*100,1)}">
+											</td>
+											<td>
+												<input type="number" id="second" name="second" th:value="${part.m2}*10000+${#numbers.formatInteger(part.s2*100,1)}">
+											</td><td>
+												<input type="number" id="third" name="third" th:value="${part.m3}*10000+${#numbers.formatInteger(part.s3*100,1)}">
+											</td>
+											<th:block th:if="${round.cubeEvent.avgCalc=='ao5'}">
+												<td>
+													<input type="number" id="fourth" name="fourth" th:value="${part.m4}*10000+${#numbers.formatInteger(part.s4*100,1)}">
+												</td>
+												<td>
+													<input type="number" id="fifth" name="fifth" th:value="${part.m5}*10000+${#numbers.formatInteger(part.s5*100,1)}">
+												</td>
+											</th:block>
+											<td>
+												<div class="button">
+													<button type="submit" class="waves-effect waves-light btn">입력</button>
+												</div>
 										</form>
-											<form th:action="@{/deleterecord(compIdx=${compIdx}, roundIdx=${roundIdx}, idx=${part.idx})}" method="post" id="dt">
-												<input type="hidden" id="csrfToken1" name="_csrf" th:value="${csrfToken}">
+										<form th:action="@{/deleterecord(compIdx=${compIdx}, roundIdx=${roundIdx}, idx=${part.idx})}" method="post" id="dt">
+											<input type="hidden" id="csrfToken1" name="_csrf" th:value="${csrfToken}">
 											<div class="button">
 												<button type="button" onclick="deleteConfirm()" class="waves-effect waves-light btn">삭제</button>
 											</div>
-											</form>
+										</form>
 										</td>
 										</tr>
 										</tbody>

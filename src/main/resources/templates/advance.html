@@ -112,23 +112,23 @@
         <div class="page-inner">
             <div class="dashboard-cards">
                 <div class="row">
-                        <div class="col-xs-12">
-                            <div th:each="rounds:${list}">
+                    <div class="col-xs-12">
+                        <div th:each="rounds:${list}">
                             <form th:action="@{/advance(compIdx=${compIdx}, pastRoundIdx=${roundIdx}, nowRoundIdx=${rounds.idx})}" method="post" onclick="this.submit();">
                                 <input type="hidden" id="csrfToken" name="_csrf" th:value="${csrfToken}">
-                            <div class="card horizontal cardIcon waves-effect waves-dark" >
-                                <div class="card-image blue"><!--완료는 파란색-->
-                                    <img th:src="@{'/img/'+${rounds.eventName}+'.svg'}"/>
-                                </div>
-                                <div class="card-stacked blue">
-                                    <div class="card-content">
-                                        <h3>[[${rounds.eventName}]] [[${rounds.round}]]</h3>
+                                <div class="card horizontal cardIcon waves-effect waves-dark" >
+                                    <div class="card-image blue"><!--완료는 파란색-->
+                                        <img th:src="@{'/img/'+${rounds.cubeEvent.eventName}+'.svg'}"/>
                                     </div>
-                                    <div class="card-action">
-                                        <strong>[[${#dates.format(rounds.eventStart, 'HH:mm')}]] - [[${#dates.format(rounds.eventEnd, 'HH:mm')}]]</strong>
+                                    <div class="card-stacked blue">
+                                        <div class="card-content">
+                                            <h3>[[${rounds.cubeEvent.eventName}]] [[${rounds.round}]]</h3>
+                                        </div>
+                                        <div class="card-action">
+                                            <strong>[[${#dates.format(rounds.eventStart, 'HH:mm')}]] - [[${#dates.format(rounds.eventEnd, 'HH:mm')}]]</strong>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             </form>
                         </div>
                     </div>

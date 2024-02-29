@@ -2,12 +2,12 @@ package CubingClubKorea.CCK_CompRank.Controller;
 
 
 import CubingClubKorea.CCK_CompRank.DTO.CompListDTO;
+import CubingClubKorea.CCK_CompRank.DTO.CubeEventDTO;
 import CubingClubKorea.CCK_CompRank.DTO.ParticipateDTO;
 import CubingClubKorea.CCK_CompRank.DTO.RoundDTO;
-import CubingClubKorea.CCK_CompRank.Service.AccountService;
-import CubingClubKorea.CCK_CompRank.Service.CompListService;
-import CubingClubKorea.CCK_CompRank.Service.ParticipateService;
-import CubingClubKorea.CCK_CompRank.Service.RoundService;
+import CubingClubKorea.CCK_CompRank.Entity.CubeEvent;
+import CubingClubKorea.CCK_CompRank.Repository.EventRepository;
+import CubingClubKorea.CCK_CompRank.Service.*;
 import CubingClubKorea.CCK_CompRank.Entity.CompList;
 import CubingClubKorea.CCK_CompRank.Entity.Participate;
 import CubingClubKorea.CCK_CompRank.Entity.Round;
@@ -38,6 +38,8 @@ public class MainController {
     private final ParticipateService participateService;
     @Autowired
     private final AccountService accountService;
+
+    private final EventService eventService;
 
     private Date now=new Date();
 
@@ -122,7 +124,8 @@ public class MainController {
             roundDTO.setCompIdx(compIdx);
             roundDTO.setSeq(i+1);
             roundDTO.setRound(round.getRound().get(i));
-            roundDTO.setEventName(round.getEventName().get(i));
+            CubeEvent cubeEvent=eventService.findByEventName(round.getEventName().get(i));
+            roundDTO.setCubeEvent(cubeEvent);
             roundDTO.setEventStart(formatter.parse(round.getEventStart()[i]));
             roundDTO.setEventEnd(formatter.parse(round.getEventEnd()[i]));
             roundDTO.setAdvance(round.getAdvance().get(i));
@@ -178,7 +181,13 @@ public class MainController {
     @PostMapping("/recordcomp")
     public String UpdateRecord(@ModelAttribute Recorder recorder, @RequestParam(name="compIdx") int compIdx, @RequestParam(name="roundIdx") int roundIdx, @RequestParam(name="idx")int idx, Authentication authentication)throws ParseException{
         String checkerName=accountService.getUserName(authentication.getName());
-        participateService.updateRecordAo5(recorder, checkerName, idx);
+        String avgType=roundService.getOne(roundIdx).getCubeEvent().getAvgCalc();
+        if(avgType.equals("ao5")){
+            participateService.updateRecordAo5(recorder, checkerName, idx);
+        }
+        else if(avgType.equals("mo3")){
+            participateService.updateRecordMo3(recorder, checkerName, idx);
+        }
         participateService.updateChecker(null, idx);
         List<Integer> list=participateService.getRank(roundIdx);
         for(int i=0; i<list.size(); i++) {

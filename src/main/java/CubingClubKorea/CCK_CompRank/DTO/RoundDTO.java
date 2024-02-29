@@ -1,5 +1,6 @@
 package CubingClubKorea.CCK_CompRank.DTO;
 
+import CubingClubKorea.CCK_CompRank.Entity.CubeEvent;
 import CubingClubKorea.CCK_CompRank.Entity.Round;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ public class RoundDTO {
 
     private int Seq;
 
-    private String EventName;
+    private CubeEvent cubeEvent;
 
     private String round;
 
@@ -31,7 +32,7 @@ public class RoundDTO {
         this.Idx=entity.getIdx();
         this.CompIdx=entity.getCompIdx();
         this.Seq=entity.getSeq();
-        this.EventName=entity.getEventName();
+        this.cubeEvent=entity.getCubeEvent();
         this.round=entity.getRound();
         this.eventStart=entity.getEventStart();
         this.eventEnd=entity.getEventEnd();
@@ -42,7 +43,7 @@ public class RoundDTO {
         return Round.builder()
                 .CompIdx(CompIdx)
                 .Seq(Seq)
-                .EventName(EventName)
+                .cubeEvent(cubeEvent)
                 .Round(round)
                 .EventStart(eventStart)
                 .EventEnd(eventEnd)

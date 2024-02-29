@@ -108,7 +108,7 @@
                 [[${comp.compName}]]
             </h1>
             <h3 class="page-header">
-                [[${round.eventName}]] [[${round.round}]]
+                [[${round.cubeEvent.eventName}]] [[${round.round}]]
             </h3>
         </div>
 
@@ -127,30 +127,32 @@
                                         <th class="fixedCol">이름</th>
                                         <th>평균</th>
                                         <th>최고</th>
-                                        <th>아이디</th>
-                                        <th>1</th>
-                                        <th>2</th>
-                                        <th>3</th>
-                                        <th>4</th>
-                                        <th>5</th>
-                                        <th sec:authorize="hasAuthority('admin')">1차 확인</th>
-                                        <th sec:authorize="hasAuthority('admin')">2차 확인</th>
+                                        <th class="noShowMobile">아이디</th>
+                                        <th class="noShowMobile">1</th>
+                                        <th class="noShowMobile">2</th>
+                                        <th class="noShowMobile">3</th>
+                                        <th:block th:if="${round.cubeEvent.avgCalc=='ao5'}">
+                                            <th class="noShowMobile">4</th>
+                                            <th class="noShowMobile">5</th>
+                                        </th:block>
+                                        <th class="noShowMobile" sec:authorize="hasAuthority('admin')">1차 확인</th>
+                                        <th class="noShowMobile" sec:authorize="hasAuthority('admin')">2차 확인</th>
                                     </tr>
                                     </thead>
                                     <div th:each="part, partStat:${partList}">
-                                    <tbody>
-                                    <div th:if="${partStat.count<=round.advance} ">
-                                        <tr class="success">
-                                    </div>
-                                    <div th:if="${round.advance==3} and ${partStat.count==1}">
-                                        <tr class="info">
-                                    </div>
-                                    <div th:if="${round.advance==3} and ${partStat.count==2}">
-                                        <tr class="success">
-                                    </div>
-                                    <div th:if="${round.advance==3} and ${partStat.count==3}">
-                                        <tr class="warning">
-                                    </div>
+                                        <tbody th:onclick="openModal([[${part.idx}]])">
+                                        <div th:if="${partStat.count<=round.advance} ">
+                                            <tr class="success">
+                                        </div>
+                                        <div th:if="${round.advance==3} and ${partStat.count==1}">
+                                            <tr class="info">
+                                        </div>
+                                        <div th:if="${round.advance==3} and ${partStat.count==2}">
+                                            <tr class="success">
+                                        </div>
+                                        <div th:if="${round.advance==3} and ${partStat.count==3}">
+                                            <tr class="warning">
+                                        </div>
                                         <td>[[${part.ranking}]]</td>
                                         <td class="fixedCol">[[${part.userName}]]</td>
                                         <td th:if="${part.avgM>0}">[[${part.avgM}]]:[[${part.avgS}]]</td>
@@ -163,48 +165,102 @@
                                         <td th:if="${part.singleS==-2}">DNS</td>
                                         <td th:if="${part.singleM==0} and ${part.singleS==0}"></td>
                                         <td th:if="${part.singleM==0} and ${part.singleS>0}">[[${part.singleS}]]</td>
-                                        <td>[[${part.email}]]</td>
-                                        <td th:if="${part.m1>0}">[[${part.m1}]]:[[${part.s1}]]</td>
-                                        <td th:if="${part.s1==-1}">DNF</td>
-                                        <td th:if="${part.s1==-2}">DNS</td>
-                                        <td th:if="${part.m1==0} and ${part.s1==0}"></td>
-                                        <td th:if="${part.m1==0} and ${part.s1>0}">[[${part.s1}]]</td>
-                                        <td th:if="${part.m2>0}">[[${part.m2}]]:[[${part.s2}]]</td>
-                                        <td th:if="${part.s2==-1}">DNF</td>
-                                        <td th:if="${part.s2==-2}">DNS</td>
-                                        <td th:if="${part.m2==0} and ${part.s2==0}"></td>
-                                        <td th:if="${part.m2==0} and ${part.s2>0}">[[${part.s2}]]</td>
-                                        <td th:if="${part.m3>0}">[[${part.m3}]]:[[${part.s3}]]</td>
-                                        <td th:if="${part.s3==-1}">DNF</td>
-                                        <td th:if="${part.s3==-2}">DNS</td>
-                                        <td th:if="${part.m3==0} and ${part.s3==0}"></td>
-                                        <td th:if="${part.m3==0} and ${part.s3>0}">[[${part.s3}]]</td>
-                                        <td th:if="${part.m4>0}">[[${part.m4}]]:[[${part.s4}]]</td>
-                                        <td th:if="${part.s4==-1}">DNF</td>
-                                        <td th:if="${part.s4==-2}">DNS</td>
-                                        <td th:if="${part.m4==0} and ${part.s4==0}"></td>
-                                        <td th:if="${part.m4==0} and ${part.s4>0}">[[${part.s4}]]</td>
-                                        <td th:if="${part.m5>0}">[[${part.m5}]]:[[${part.s5}]]</td>
-                                        <td th:if="${part.s5==-1}">DNF</td>
-                                        <td th:if="${part.s5==-2}">DNS</td>
-                                        <td th:if="${part.m5==0} and ${part.s5==0}"></td>
-                                        <td th:if="${part.m5==0} and ${part.s5>0}">[[${part.s5}]]</td>
-                                        <td sec:authorize="hasAuthority('admin')">[[${part.checker1}]]</td>
-                                    <td sec:authorize="hasAuthority('admin')">
-                                        <div th:if="${not #strings.isEmpty(part.checker2)}">
-                                        [[${part.checker2}]]
-                                        </div>
-                                        <div th:unless="${not #strings.isEmpty(part.checker2)}">
-                                        <form th:action="@{/updatechecker(compIdx=${compIdx}, roundIdx=${roundIdx},idx=${part.idx})}" method="post">
-                                            <input type="hidden" id="csrfToken1" name="_csrf" th:value="${csrfToken}">
-                                            <div class="button">
-                                                <button type="submit" class="waves-effect waves-light btn">2차 확인</button>
+                                        <td class="noShowMobile">[[${part.email}]]</td>
+                                        <td class="noShowMobile" th:if="${part.m1>0}">[[${part.m1}]]:[[${part.s1}]]</td>
+                                        <td class="noShowMobile" th:if="${part.s1==-1}">DNF</td>
+                                        <td class="noShowMobile" th:if="${part.s1==-2}">DNS</td>
+                                        <td class="noShowMobile" th:if="${part.m1==0} and ${part.s1==0}"></td>
+                                        <td class="noShowMobile" th:if="${part.m1==0} and ${part.s1>0}">[[${part.s1}]]</td>
+                                        <td class="noShowMobile" th:if="${part.m2>0}">[[${part.m2}]]:[[${part.s2}]]</td>
+                                        <td class="noShowMobile" th:if="${part.s2==-1}">DNF</td>
+                                        <td class="noShowMobile" th:if="${part.s2==-2}">DNS</td>
+                                        <td class="noShowMobile" th:if="${part.m2==0} and ${part.s2==0}"></td>
+                                        <td class="noShowMobile" th:if="${part.m2==0} and ${part.s2>0}">[[${part.s2}]]</td>
+                                        <td class="noShowMobile" th:if="${part.m3>0}">[[${part.m3}]]:[[${part.s3}]]</td>
+                                        <td class="noShowMobile" th:if="${part.s3==-1}">DNF</td>
+                                        <td class="noShowMobile" th:if="${part.s3==-2}">DNS</td>
+                                        <td class="noShowMobile" th:if="${part.m3==0} and ${part.s3==0}"></td>
+                                        <td class="noShowMobile" th:if="${part.m3==0} and ${part.s3>0}">[[${part.s3}]]</td>
+                                        <th:block th:if="${round.cubeEvent.avgCalc=='ao5'}">
+                                            <td class="noShowMobile" th:if="${part.m4>0}">[[${part.m4}]]:[[${part.s4}]]</td>
+                                            <td class="noShowMobile" th:if="${part.s4==-1}">DNF</td>
+                                            <td class="noShowMobile" th:if="${part.s4==-2}">DNS</td>
+                                            <td class="noShowMobile" th:if="${part.m4==0} and ${part.s4==0}"></td>
+                                            <td class="noShowMobile" th:if="${part.m4==0} and ${part.s4>0}">[[${part.s4}]]</td>
+                                            <td class="noShowMobile" th:if="${part.m5>0}">[[${part.m5}]]:[[${part.s5}]]</td>
+                                            <td class="noShowMobile" th:if="${part.s5==-1}">DNF</td>
+                                            <td class="noShowMobile" th:if="${part.s5==-2}">DNS</td>
+                                            <td class="noShowMobile" th:if="${part.m5==0} and ${part.s5==0}"></td>
+                                            <td class="noShowMobile" th:if="${part.m5==0} and ${part.s5>0}">[[${part.s5}]]</td>
+                                        </th:block>
+                                        <div class="modalContainer" th:id="${part.idx}" style="display: none">
+                                            <div class="modalContent">
+                                                <h3 style="margin-bottom:30px; font-weight: 600;">[[${part.userName}]] #[[${part.ranking}]]</h3>
+                                                <h4 style="font-weight: 550;">이메일</h4>
+                                                <h5>[[${part.email}]]</h5>
+                                                <h4 style="font-weight: 550;">솔빙내역</h4>
+                                                <h5 style="display: inline" th:if="${part.m1>0}">[[${part.m1}]]:[[${part.s1}]]</h5>
+                                                <h5 style="display: inline" th:if="${part.s1==-1}">DNF</h5>
+                                                <h5 style="display: inline" th:if="${part.s1==-2}">DNS</h5>
+                                                <h5 style="display: inline" th:if="${part.m1==0} and ${part.s1==0}">n/a</h5>
+                                                <h5 style="display: inline" th:if="${part.m1==0} and ${part.s1>0}">[[${part.s1}]]</h5>
+                                                <h5 style="display: inline">|</h5>
+                                                <h5 style="display: inline" th:if="${part.m2>0}">[[${part.m2}]]:[[${part.s2}]]</h5>
+                                                <h5 style="display: inline" th:if="${part.s2==-1}">DNF</h5>
+                                                <h5 style="display: inline" th:if="${part.s2==-2}">DNS</h5>
+                                                <h5 style="display: inline" th:if="${part.m2==0} and ${part.s2==0}">n/a</h5>
+                                                <h5 style="display: inline" th:if="${part.m2==0} and ${part.s2>0}">[[${part.s2}]]</h5>
+                                                <h5 style="display: inline">|</h5>
+                                                <h5 style="display: inline" th:if="${part.m3>0}">[[${part.m3}]]:[[${part.s3}]]</h5>
+                                                <h5 style="display: inline" th:if="${part.s3==-1}">DNF</h5>
+                                                <h5 style="display: inline" th:if="${part.s3==-2}">DNS</h5>
+                                                <h5 style="display: inline" th:if="${part.m3==0} and ${part.s3==0}">n/a</h5>
+                                                <h5 style="display: inline" th:if="${part.m3==0} and ${part.s3>0}">[[${part.s3}]]</h5>
+                                                <th:block th:if="${round.cubeEvent.avgCalc=='ao5'}">
+                                                    <h5 style="display: inline">|</h5>
+                                                    <h5 style="display: inline" th:if="${part.m4>0}">[[${part.m4}]]:[[${part.s4}]]</h5>
+                                                    <h5 style="display: inline" th:if="${part.s4==-1}">DNF</h5>
+                                                    <h5 style="display: inline" th:if="${part.s4==-2}">DNS</h5>
+                                                    <h5 style="display: inline" th:if="${part.m4==0} and ${part.s4==0}">n/a</h5>
+                                                    <h5 style="display: inline" th:if="${part.m4==0} and ${part.s4>0}">[[${part.s4}]]</h5>
+                                                    <h5 style="display: inline">|</h5>
+                                                    <h5 style="display: inline" th:if="${part.m5>0}">[[${part.m5}]]:[[${part.s5}]]</h5>
+                                                    <h5 style="display: inline" th:if="${part.s5==-1}">DNF</h5>
+                                                    <h5 style="display: inline" th:if="${part.s5==-2}">DNS</h5>
+                                                    <h5 style="display: inline" th:if="${part.m5==0} and ${part.s5==0}">n/a</h5>
+                                                    <h5 style="display: inline" th:if="${part.m5==0} and ${part.s5>0}">[[${part.s5}]]</h5>
+                                                </th:block>
+                                                <h4 style="font-weight: 550;">평균</h4>
+                                                <h5 th:if="${part.avgM>0}">[[${part.avgM}]]:[[${part.avgS}]]</h5>
+                                                <h5 th:if="${part.avgS==-1}">DNF</h5>
+                                                <h5 th:if="${part.avgS==-2}">DNS</h5>
+                                                <h5 th:if="${part.avgM==0} and ${part.avgS==0}">n/a</h5>
+                                                <h5 th:if="${part.avgM==0} and ${part.avgS>0}">[[${part.avgS}]]</h5>
+                                                <h4 style="font-weight: 550;">최고</h4>
+                                                <h5 th:if="${part.singleM>0}">[[${part.singleM}]]:[[${part.singleS}]]</h5>
+                                                <h5 th:if="${part.singleS==-1}">DNF</h5>
+                                                <h5 th:if="${part.singleS==-2}">DNS</h5>
+                                                <h5 th:if="${part.singleM==0} and ${part.singleS==0}">n/a</h5>
+                                                <h5 th:if="${part.singleM==0} and ${part.singleS>0}">[[${part.singleS}]]</h5>
+                                                <button type="button" class="waves-effect waves-light btn" style="position: absolute; right: 30px; bottom: 30px;" th:onclick="closeModal([[${part.idx}]])">닫기</button>
                                             </div>
-                                        </form>
                                         </div>
-                                    </td>
-                                    </tr>
-                                    </tbody>
+                                        <td sec:authorize="hasAuthority('admin')">[[${part.checker1}]]</td>
+                                        <td sec:authorize="hasAuthority('admin')">
+                                            <div th:if="${not #strings.isEmpty(part.checker2)}">
+                                                [[${part.checker2}]]
+                                            </div>
+                                            <div th:unless="${not #strings.isEmpty(part.checker2)}">
+                                                <form th:action="@{/updatechecker(compIdx=${compIdx}, roundIdx=${roundIdx},idx=${part.idx})}" method="post">
+                                                    <input type="hidden" id="csrfToken1" name="_csrf" th:value="${csrfToken}">
+                                                    <div class="button">
+                                                        <button type="submit" class="waves-effect waves-light btn">2차 확인</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </td>
+                                        </tr>
+                                        </tbody>
                                     </div>
                                 </table>
                             </div>
@@ -215,32 +271,40 @@
                 </div>
             </div>
         </div>
-            <!-- /. PAGE INNER  -->
-        </div>
-        <!-- JS Scripts-->
-        <!-- jQuery Js -->
-        <script src="/js/jquery-1.10.2.js"></script>
+        <!-- /. PAGE INNER  -->
+    </div>
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script src="/js/jquery-1.10.2.js"></script>
 
-        <!-- Bootstrap Js -->
-        <script src="/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="/js/bootstrap.min.js"></script>
 
-        <script src="/materialize/js/materialize.min.js"></script>
+    <script src="/materialize/js/materialize.min.js"></script>
 
-        <!-- Metis Menu Js -->
-        <script src="/js/jquery.metisMenu.js"></script>
-        <!-- Morris Chart Js -->
-        <script src="/js/morris/raphael-2.1.0.min.js"></script>
-        <script src="/js/morris/morris.js"></script>
+    <!-- Metis Menu Js -->
+    <script src="/js/jquery.metisMenu.js"></script>
+    <!-- Morris Chart Js -->
+    <script src="/js/morris/raphael-2.1.0.min.js"></script>
+    <script src="/js/morris/morris.js"></script>
 
 
-        <script src="/js/easypiechart.js"></script>
-        <script src="/js/easypiechart-data.js"></script>
+    <script src="/js/easypiechart.js"></script>
+    <script src="/js/easypiechart-data.js"></script>
 
-        <script src="/js/Lightweight-Chart/jquery.chart.js"></script>
+    <script src="/js/Lightweight-Chart/jquery.chart.js"></script>
 
-        <!-- Custom Js -->
-        <script src="/js/custom-scripts.js"></script>
+    <!-- Custom Js -->
+    <script src="/js/custom-scripts.js"></script>
+    <script>
+        function openModal(id){
+            document.getElementById(id).style.display='';
+        }
 
+        function closeModal(id){
+            document.getElementById(id).style.display='none';
+        }
+    </script>
 </div>
 </body>
 

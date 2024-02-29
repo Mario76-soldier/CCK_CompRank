@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
 public class CubeEvent {
     @Id
     @Column(name="EventName")
-    private String EventName;
+    private String eventName;
 
     @Column(name = "AvgCalc")
-    private String AvgCalc;
+    private String avgCalc;
 
     @Builder
     public CubeEvent(String EventName, String AvgCalc){
-        this.EventName=EventName;
-        this.AvgCalc=AvgCalc;
+        this.eventName=EventName;
+        this.avgCalc=AvgCalc;
     }
 }

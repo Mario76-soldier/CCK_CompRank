@@ -24,8 +24,9 @@ public class Round {
     @Column(name="Seq")
     private int seq;
 
-    @Column(name="EventName")
-    private String eventName;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="EventName")
+    private CubeEvent cubeEvent;
 
     @Column(name="Round")
     private String round;
@@ -40,11 +41,11 @@ public class Round {
     private int advance;
 
     @Builder
-    public Round(int Idx, int CompIdx, int Seq, String EventName, String Round, Date EventStart, Date EventEnd, int Advance){
+    public Round(int Idx, int CompIdx, int Seq, CubeEvent cubeEvent, String Round, Date EventStart, Date EventEnd, int Advance){
         this.idx=Idx;
         this.compIdx=CompIdx;
         this.seq=Seq;
-        this.eventName=EventName;
+        this.cubeEvent=cubeEvent;
         this.round=Round;
         this.eventStart=EventStart;
         this.eventEnd=EventEnd;
